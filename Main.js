@@ -7,7 +7,12 @@
     game.state.add("Loading", loading);
     game.state.add("Menu", menu);
     game.state.add("Play", play);
+<<<<<<< Updated upstream
     game.state.add("GameOver", gameOver);
     game.state.start("Boot");
 
+=======
+    // game.state.add("GameOver", gameOver);
+    gameInfo.set("game",game);
+>>>>>>> Stashed changes
 }());

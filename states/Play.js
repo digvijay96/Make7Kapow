@@ -1,6 +1,6 @@
 "use strict";
 
-var play = function(game) {
+var play = function() {
 };
 
 play.prototype = {
@@ -39,8 +39,8 @@ play.prototype = {
     },
 
     create: function() {
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.add.image(80, 100, 'board');
+        gameInfo.get("game").physics.startSystem(Phaser.Physics.ARCADE);
+        gameInfo.get("game").add.image(80, 100, 'board');
         this.createHexCells();
         this.createNewTile(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
@@ -70,8 +70,8 @@ play.prototype = {
         for (var index = 0; index < this.cellIndicesToBeMerged.length; index++) {
             if (this.cellIndicesToBeMerged[index] != destinationIndex ) {
                 var cell = this.cellsArray[this.cellIndicesToBeMerged[index]];
-                this.game.physics.arcade.enable(cell.sprite);
-                this.game.physics.arcade.moveToXY(cell.sprite, finalXPos, finalYPos, defaultSpeed, maxTime)
+                gameInfo.get("game").physics.arcade.enable(cell.sprite);
+                gameInfo.get("game").physics.arcade.moveToXY(cell.sprite, finalXPos, finalYPos, defaultSpeed, maxTime)
             }
         }
         setTimeout(function() {
@@ -80,7 +80,7 @@ play.prototype = {
                 cell.sprite.destroy();
                 cell.sprite = null
             }
-            var sprite = this.game.add.sprite(finalXPos, finalYPos, resultantSpriteKey);
+            var sprite = gameInfo.get("game").add.sprite(finalXPos, finalYPos, resultantSpriteKey);
             sprite.anchor.setTo(0.5, 0.5);
             this.cellsArray[destinationIndex].sprite = sprite;
             if (resultantNumber < this.numberSeven) {
@@ -161,7 +161,7 @@ play.prototype = {
         var matchingIndex = this.checkMatchingTile(pointer);
         if(matchingIndex !== -1 && this.cellsArray[matchingIndex].spriteObject == null) {
             this.removeHighlighter();
-            this.highlighter = this.game.add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], '1');
+            this.highlighter = gameInfo.get("game").add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], '1');
             this.highlighter.anchor.setTo(0.5, 0.5);
         } else {
             this.removeHighlighter();

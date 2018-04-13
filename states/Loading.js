@@ -1,20 +1,25 @@
 "use strict";
 
-var loading = function(game) {
+var loading = function() {
 };
 
 loading.prototype = {
     preload: function() {
-        this.game.load.image('cell', 'assets/play-button.png');
+        gameInfo.get("game").load.image('cell', 'assets/play-button.png');
     },
 
     create: function() {
-        var playImage = this.game.add.image(100, 100, 'cell');
+        var playImage = gameInfo.get("game").add.image(100, 100, 'cell');
         playImage.inputEnabled = true;
         playImage.events.onInputDown.add(this.listener, this);
     },
 
     listener: function() {
-        this.game.state.start("Play");
+             kapow.startSoloGame(function (roomDetail) {
+            gameInfo.get("game").state.start(GAME_CONST.STATES.PLAY);
+        }, function (error) {
+            console.log("startSoloGame Failed : ", error);
+        });
+       // this.game.state.start("Play");
     }
 }

@@ -5,7 +5,7 @@ window.game = {
         console.log("Room returned by kapow onLoad - " + JSON.stringify(room));
         KapowClientController.handleOnLoad(room);
     },
-    onGameEnd: function (outcome) {
+    /*onGameEnd: function (outcome) {
         console.log("CLIENT : Game Ended", outcome);
         KapowClientController.handleOnGameEnd(outcome);
     },
@@ -40,5 +40,5 @@ window.game = {
     },
     onRoomLockStatusChange: function (room) {
         console.log("Room Lock status changed for room :", room);
-    }
+    }*/
 };
