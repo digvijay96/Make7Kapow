@@ -33,9 +33,9 @@ play.prototype = {
         this.numberSeven = 7;
         this.visitedCells = [];
         this.cellIndicesToBeMerged = [];
-        this.numberOfMoves = 0
-        this.bottomHexCell = null
-        this.maxNumberForNewTile = 3
+        this.numberOfMoves = 0;
+        this.bottomHexCell = null;
+        this.maxNumberForNewTile = 3;
     },
 
     create: function() {
@@ -44,7 +44,7 @@ play.prototype = {
         this.createHexCells();
         this.createNewTile(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
-        gameInfo.set('difficulty_level', 'MEDIUM')
+        gameInfo.set('difficulty_level', 'MEDIUM');
     },
 
     update: function() {
@@ -65,7 +65,7 @@ play.prototype = {
     mergeCells: function(destinationIndex) {
         const currentSpriteNumber = parseInt(this.cellsArray[destinationIndex].sprite.key);
         const resultantNumber = currentSpriteNumber + 1;
-        this.updateMaxNumberReached(resultantNumber)
+        this.updateMaxNumberReached(resultantNumber);
         const resultantSpriteKey = (resultantNumber).toString();
         const finalXPos = this.cellsArray[destinationIndex].frame[0],
             finalYPos = this.cellsArray[destinationIndex].frame[1];
@@ -215,11 +215,11 @@ play.prototype = {
     updateMaxNumberReached: function(currentNumber) {
         if (gameInfo.get('difficulty_level') == 'EASY') {
             if (currentNumber >= 4) {
-                this.maxNumberForNewTile = 4
+                this.maxNumberForNewTile = 4;
             }
         } else if (gameInfo.get('difficulty_level') == 'MEDIUM') {
             if (currentNumber >= 6) {
-                this.maxNumberForNewTile = 4
+                this.maxNumberForNewTile = 4;;
             }
         }
     },
