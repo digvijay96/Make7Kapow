@@ -9,7 +9,10 @@ loading.prototype = {
     },
 
     create: function() {
-        var playImage = gameInfo.get("game").add.image(100, 100, 'cell');
+        var playImage = gameInfo.get("game").add.image(this.game.world.centerX, this.game.world.centerY, 'cell');
+        playImage.anchor.setTo(0.5);
+        playImage.scale.setTo(4);
+
         playImage.inputEnabled = true;
         playImage.events.onInputDown.add(this.listener, this);
     },

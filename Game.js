@@ -3,7 +3,7 @@
 window.game = {
     onLoad: function (room) {
         console.log("Room returned by kapow onLoad - " + JSON.stringify(room));
-        KapowClientController.handleOnLoad(room);
+        kapowClientController.handleOnLoad(room);
     },
     /*onGameEnd: function (outcome) {
         console.log("CLIENT : Game Ended", outcome);
