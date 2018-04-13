@@ -5,7 +5,6 @@ var play = function() {
 
 play.prototype = {
 
-
     preload: function() {
 
         this.load.image('board', 'assets/board.png');
@@ -24,7 +23,7 @@ play.prototype = {
         this.highlighter = null;
         this.scoreLabel = null;
 
-        this.tileArray = ['1', '2', '3'];
+        this.tileArray = ['1', '2', '3', '4'];
 
         this.newTilePositionX = 246;
         this.newTilePositionY = 532;
@@ -36,6 +35,7 @@ play.prototype = {
         this.cellIndicesToBeMerged = [];
         this.numberOfMoves = 0
         this.bottomHexCell = null
+        this.maxNumberForNewTile = 3
     },
 
     create: function() {
@@ -44,6 +44,7 @@ play.prototype = {
         this.createHexCells();
         this.createNewTile(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
+        gameInfo.set('difficulty_level', 'MEDIUM')
     },
 
     update: function() {
@@ -64,6 +65,7 @@ play.prototype = {
     mergeCells: function(destinationIndex) {
         const currentSpriteNumber = parseInt(this.cellsArray[destinationIndex].sprite.key);
         const resultantNumber = currentSpriteNumber + 1;
+        this.updateMaxNumberReached(resultantNumber)
         const resultantSpriteKey = (resultantNumber).toString();
         const finalXPos = this.cellsArray[destinationIndex].frame[0],
             finalYPos = this.cellsArray[destinationIndex].frame[1];
@@ -210,8 +212,22 @@ play.prototype = {
         return -1;
     },
 
+    updateMaxNumberReached: function(currentNumber) {
+        if (gameInfo.get('difficulty_level') == 'EASY') {
+            if (currentNumber >= 4) {
+                this.maxNumberForNewTile = 4
+            }
+        } else if (gameInfo.get('difficulty_level') == 'MEDIUM') {
+            if (currentNumber >= 6) {
+                this.maxNumberForNewTile = 4
+            }
+        }
+    },
+
     createNewTile: function() {
-        this.newTileType = this.tileArray[Math.floor(Math.random() * 3)];
+        this.newTileNumber = Math.floor(Math.random() * this.maxNumberForNewTile) + 1
+
+        this.newTileType = this.tileArray[this.newTileNumber - 1];
         this.bottomHexCell = this.game.add.sprite(this.newTilePositionX, this.newTilePositionY, this.newTileType);
         this.bottomHexCell.anchor.setTo(0.5, 0.5);
         this.bottomHexCell.inputEnabled = true;
