@@ -57,6 +57,8 @@ play.prototype = {
             gameInfo.set('won', false);
             console.log('YOU LOST')
         }
+        gameInfo.set('score', this.score)
+        gameInfo.get('game').state.start('GameOver')
     },
 
     mergeCells: function(destinationIndex) {
@@ -91,6 +93,18 @@ play.prototype = {
         }.bind(this), maxTime);
     },
 
+     getHexCellForIndex: function(x, y) {
+        if (Math.abs(x) + Math.abs(y) > 4) {
+            return -1
+        }
+        for(var index = 0 ; index < this.cellsArray.length; index++) {
+            if (this.cellsArray[index].key[0] == x &&  this.cellsArray[index].key[1] == y) {
+                return index
+            }
+        }
+        return -1
+    },
+
     evaluateCellsToBeMerged: function(currentIndex, matchingKey) {
         this.visitedCells[currentIndex] = true;
         if (this.cellsArray[currentIndex].sprite == null || this.cellsArray[currentIndex].sprite.key != matchingKey) {
@@ -114,8 +128,37 @@ play.prototype = {
         if (this.cellIndicesToBeMerged.length >= 3) {
             this.mergeCells(startIndex);
         } else {
-            this.enableUserIO()
+            this.prepareForNextMove()
         }
+    },
+
+    checkIfUserLost: function() {
+        var didUserLose = true;
+        for(var index = 0; index < this.cellsArray.length && didUserLose ; index++) {
+            if (this.cellsArray[index].sprite == null) {
+                didUserLose = false;
+            }
+        }
+        if (didUserLose) {
+           this.declareGameEnd(false);
+        }
+    },
+
+    prepareForNextMove: function() {
+        this.enableUserIO()
+        this.checkIfUserLost()
+    },
+
+    onDragUpdate: function(sprite, pointer) {
+        var matchingIndex = this.checkMatchingTile(pointer);
+        if(matchingIndex !== -1 && this.cellsArray[matchingIndex].spriteObject == null) {
+            this.removeHighlighter();
+            this.highlighter = gameInfo.get("game").add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], '1');
+            this.highlighter.anchor.setTo(0.5, 0.5);
+        } else {
+            this.removeHighlighter();
+        }
+        sprite.bringToTop();
     },
 
     onDragStop: function(sprite, pointer) {
@@ -157,18 +200,6 @@ play.prototype = {
         }
     },
 
-    onDragUpdate: function(sprite, pointer) {
-        var matchingIndex = this.checkMatchingTile(pointer);
-        if(matchingIndex !== -1 && this.cellsArray[matchingIndex].spriteObject == null) {
-            this.removeHighlighter();
-            this.highlighter = gameInfo.get("game").add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], '1');
-            this.highlighter.anchor.setTo(0.5, 0.5);
-        } else {
-            this.removeHighlighter();
-        }
-        sprite.bringToTop();
-    },
-
     checkMatchingTile: function(pointer) {
         for(var index = 0; index < this.cellsArray.length; index++) {
             if((Math.abs(pointer.x - this.cellsArray[index].frame[0]) + Math.abs(pointer.y - this.cellsArray[index].frame[1]) < 30) &&
@@ -200,19 +231,6 @@ play.prototype = {
             this.bottomHexCell.inputEnabled = true
         }
     },
-
-    getHexCellForIndex: function(x, y) {
-        if (Math.abs(x) + Math.abs(y) > 4) {
-            return -1
-        }
-        for(var index = 0 ; index < this.cellsArray.length; index++) {
-            if (this.cellsArray[index].key[0] == x &&  this.cellsArray[index].key[1] == y) {
-                return index
-            }
-        }
-        return -1
-    },
-
 
     createHexCells: function() {
             this.cellsArray.push(createCellObject([-2,-2], [188, 150], null));
