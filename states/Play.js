@@ -124,7 +124,7 @@ play.prototype = {
         this.removeHighlighter();
 
         var matchingIndex = this.checkMatchingTile(pointer);
-        if(matchingIndex !== -1) {
+        if(matchingIndex !== -1 && this.cellsArray[matchingIndex].sprite == null) {
             xPosition = this.cellsArray[matchingIndex].frame[0];
             yPosition = this.cellsArray[matchingIndex].frame[1];
             this.cellsArray[matchingIndex].sprite = sprite;
