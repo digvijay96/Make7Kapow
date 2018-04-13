@@ -2,7 +2,7 @@ const GAME_CONST = {
     CANVAS : {
         WIDTH : 1080,
         HEIGHT: 1920,
-        CONTAINER: "uss-callister"
+        CONTAINER: "make7"
     },
     STATES: {
         BOOT: "Boot",
@@ -14,10 +14,5 @@ const GAME_CONST = {
             THEME: 0.2,
             TAP: 0.1
         }
-    },
-    SPEED: {
-        METEOR : 400,
-        SHOOT : 600,
-        SPACE_SHIP : 0.08
     }
 };
