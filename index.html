@@ -20,6 +20,12 @@
 
     Math.seedrandom('45');
 
+    let directions = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+    let cellsArraySize = 19;
+    let numberSeven = 7
+    var visitedCells;
+    var cellIndicesToBeMerged;
+
     var game = new Phaser.Game(500, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
     var newTileType;
@@ -28,25 +34,25 @@
 
     var highlighter = null;
 
-    var tileArray = ['oneTile', 'twoTile', 'threeTile'];
+    var tileArray = ['1', '2', '3'];
     var tileXpositions = [90, 122, 154, 186, 218, 250, 284, 316, 348, 380, 412];
     var tileYpositions = [112, 168, 224, 280, 336, 392];
 
     var allowedPositions = [[188, 150], [252, 150], [316, 150], [156, 206], [220, 206], [284, 206], [344, 206]];
 
-    var newTilePositionX = 216;
-    var newTilePositionY = 500;
+    var newTilePositionX = 246;
+    var newTilePositionY = 532;
 
     function preload() {
 
         this.load.image('board', 'assets/board.png');
-        this.load.image('oneTile', 'assets/1.png');
-        this.load.image('twoTile', 'assets/2.png');
-        this.load.image('threeTile', 'assets/3.png');
-        this.load.image('fourTile', 'assets/4.png');
-        this.load.image('fiveTile', 'assets/5.png');
-        this.load.image('sixTile', 'assets/6.png');
-        this.load.image('sevenTile', 'assets/7.png');
+        this.load.image('1', 'assets/1.png');
+        this.load.image('2', 'assets/2.png');
+        this.load.image('3', 'assets/3.png');
+        this.load.image('4', 'assets/4.png');
+        this.load.image('5', 'assets/5.png');
+        this.load.image('6', 'assets/6.png');
+        this.load.image('7', 'assets/7.png');
 
     }
 
@@ -65,6 +71,76 @@
         }
     }
 
+    function declareGameEnd(didMakeSeven) {
+        if (didMakeSeven) {
+            console.log('YOU WON')
+        } else {
+            console.log('YOU LOST')
+        }
+    }
+
+    function mergeCells(destinationIndex) {
+        let currentSpriteNumber = parseInt(cellsArray[destinationIndex].sprite.key) 
+        let resultantNumber = currentSpriteNumber + 1
+        let resultantSpriteKey = (resultantNumber).toString()
+
+        let finalXPos = cellsArray[destinationIndex].frame[0],
+            finalYPos = cellsArray[destinationIndex].frame[1];
+        let maxTime = 500
+        let defaultSpeed = 60
+        for (var index = 0; index < cellIndicesToBeMerged.length; index++) {
+            if (cellIndicesToBeMerged[index] != destinationIndex ) {
+                let cell = cellsArray[cellIndicesToBeMerged[index]]
+                game.physics.arcade.enable(cell.sprite)
+                game.physics.arcade.moveToXY(cell.sprite, finalXPos, finalYPos, defaultSpeed, maxTime)
+            }
+        }
+
+        setTimeout(function() { 
+            for (var index = 0; index < cellIndicesToBeMerged.length; index++) {
+                let cell = cellsArray[cellIndicesToBeMerged[index]]
+                cell.sprite.destroy()
+                cell.sprite = null
+            }
+            let sprite = game.add.sprite(finalXPos, finalYPos, resultantSpriteKey);
+            sprite.anchor.setTo(0.5, 0.5)
+            cellsArray[destinationIndex].sprite = sprite
+            if (resultantNumber < numberSeven) {
+                mergeCellsIfRequired(destinationIndex)
+            } else {
+                declareGameEnd(true)
+            }
+
+        }, maxTime)
+    }
+
+    function evaluateCellsToBeMerged(currentIndex, matchingKey) {
+        visitedCells[currentIndex] = true;
+        if (cellsArray[currentIndex].sprite == null || cellsArray[currentIndex].sprite.key != matchingKey) {
+            return;
+        }
+        cellIndicesToBeMerged.push(currentIndex);
+
+        for(var index = 0; index < directions.length; index++) {
+            let newXPos = cellsArray[currentIndex].key[0] + directions[index][0],
+                newYPos = cellsArray[currentIndex].key[1] + directions[index][1] ;
+
+            let neighbourCellIndex = getHexCellForIndex(newXPos, newYPos);
+            if (neighbourCellIndex != -1 && !visitedCells[neighbourCellIndex]) {
+                evaluateCellsToBeMerged(neighbourCellIndex, matchingKey);
+            }
+        }
+    }
+
+    function mergeCellsIfRequired(startIndex) {
+        visitedCells = Array(cellsArraySize).fill(false);
+        cellIndicesToBeMerged = Array(0);
+        evaluateCellsToBeMerged(startIndex, cellsArray[startIndex].sprite.key);
+        if (cellIndicesToBeMerged.length >= 3) {
+            mergeCells(startIndex);
+        }
+    }
+
     function onDragStop(sprite, pointer) {
 
         var xPosition = newTilePositionX, yPosition = newTilePositionY;
@@ -72,9 +148,10 @@
 
         var matchingIndex = checkMatchingTile(pointer);
         if(matchingIndex !== -1) {
-            xPosition = cellsArray[matchingIndex].frame[0] - 30;
-            yPosition = cellsArray[matchingIndex].frame[1] - 32;
-            cellsArray[matchingIndex].spriteObject = sprite;
+            xPosition = cellsArray[matchingIndex].frame[0];
+            yPosition = cellsArray[matchingIndex].frame[1];
+            cellsArray[matchingIndex].sprite = sprite;
+            mergeCellsIfRequired(matchingIndex)
         }
 
         if(xPosition != newTilePositionX && yPosition != newTilePositionY) {
@@ -90,7 +167,6 @@
 
     function removeHighlighter() {
         if(highlighter != null) {
-            console.log('deleting highlighter');
             highlighter.destroy();
             highlighter = null;
         }
@@ -100,12 +176,11 @@
         var matchingIndex = checkMatchingTile(pointer);
         if(matchingIndex !== -1 && cellsArray[matchingIndex].spriteObject == null) {
             removeHighlighter();
-            highlighter = game.add.image(cellsArray[matchingIndex].frame[0] - 30, cellsArray[matchingIndex].frame[1] - 32, 'oneTile');
+            highlighter = game.add.image(cellsArray[matchingIndex].frame[0] - 30, cellsArray[matchingIndex].frame[1] - 32, '1');
         } else {
             removeHighlighter();
         }
         sprite.bringToTop();
-        console.log('dragUpdate')
     }
 
     function checkMatchingTile(pointer) {
@@ -120,10 +195,23 @@
     function createNewTile() {
         newTileType = tileArray[Math.floor(Math.random() * 3)];
         var newTile = game.add.sprite(newTilePositionX, newTilePositionY, newTileType);
+        newTile.anchor.setTo(0.5, 0.5)
         newTile.events.onDragStop.add(onDragStop, this);
         newTile.events.onDragUpdate.add(onDragUpdate, this);
         newTile.inputEnabled = true;
         newTile.input.enableDrag(true);
+    }
+
+    function getHexCellForIndex(x, y) {
+        if (Math.abs(x) + Math.abs(y) > 4) {
+            return -1
+        }
+        for( var index = 0 ; index < cellsArray.length; index++) {
+            if (cellsArray[index].key[0] == x &&  cellsArray[index].key[1] == y) {
+                return index
+            }
+        }
+        return -1
     }
 
     function createHexCells() {
