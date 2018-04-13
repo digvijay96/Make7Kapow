@@ -7,7 +7,7 @@
     game.state.add("Loading", loading);
     game.state.add("Menu", menu);
     game.state.add("Play", play);
-    // game.state.add("GameOver", gameOver);
+    game.state.add("GameOver", gameOver);
     game.state.start("Boot");
 
 }());
