@@ -55,8 +55,10 @@ play.prototype = {
 
     declareGameEnd: function(didMakeSeven) {
         if (didMakeSeven) {
+            gameInfo.set('won', true);
             console.log('YOU WON')
         } else {
+            gameInfo.set('won', false);
             console.log('YOU LOST')
         }
     },
@@ -174,7 +176,7 @@ play.prototype = {
     createNewTile: function() {
         this.newTileType = this.tileArray[Math.floor(Math.random() * 3)];
         var newTile = this.game.add.sprite(this.newTilePositionX, this.newTilePositionY, this.newTileType);
-        newTile.anchor.setTo(0.5, 0.5)
+        newTile.anchor.setTo(0.5, 0.5);
         newTile.events.onDragStop.add(this.onDragStop, this);
         newTile.events.onDragUpdate.add(this.onDragUpdate, this);
         newTile.inputEnabled = true;
