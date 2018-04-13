@@ -164,7 +164,7 @@ play.prototype = {
     checkMatchingTile: function(pointer) {
         for(var index = 0; index < this.cellsArray.length; index++) {
             if((Math.abs(pointer.x - this.cellsArray[index].frame[0]) + Math.abs(pointer.y - this.cellsArray[index].frame[1]) < 30) &&
-                this.cellsArray[index].spriteObject == null) {
+                this.cellsArray[index].sprite == null) {
                 return index;
             }
         }
