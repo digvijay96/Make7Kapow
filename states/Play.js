@@ -19,7 +19,6 @@ play.prototype = {
 
         Math.seedrandom('45');
 
-        this.isLastTileSet = false;
         this.cellsArray = [];
 
         this.highlighter = null;
@@ -36,21 +35,18 @@ play.prototype = {
         this.visitedCells = [];
         this.cellIndicesToBeMerged = [];
         this.numberOfMoves = 0
+        this.bottomHexCell = null
     },
 
     create: function() {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.add.image(80, 100, 'board');
         this.createHexCells();
-        this.createNewTile();
+        this.createNewTile(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
     },
 
     update: function() {
-        if(this.isLastTileSet === true) {
-            this.createNewTile();
-            this.isLastTileSet = false;
-        }
     },
 
     declareGameEnd: function(didMakeSeven) {
@@ -115,6 +111,8 @@ play.prototype = {
         this.evaluateCellsToBeMerged(startIndex, this.cellsArray[startIndex].sprite.key);
         if (this.cellIndicesToBeMerged.length >= 3) {
             this.mergeCells(startIndex);
+        } else {
+            this.enableUserIO()
         }
     },
 
@@ -133,10 +131,11 @@ play.prototype = {
         if(xPosition != this.newTilePositionX && yPosition != this.newTilePositionY) {
             sprite.position.setTo(xPosition, yPosition);
             sprite.input.draggable = false;
+            this.createNewTile();
+            this.disableUserIO()
             this.mergeCellsIfRequired(matchingIndex);
             this.incrementScore()
 
-            this.isLastTileSet = true;
         } else {
             sprite.position.setTo(this.newTilePositionX, this.newTilePositionY);
         }
@@ -178,15 +177,27 @@ play.prototype = {
         return -1;
     },
 
-    createNewTile: function() {
+    createNewTile: function(isFirstTime = false) {
         this.newTileType = this.tileArray[Math.floor(Math.random() * 3)];
-        var newTile = this.game.add.sprite(this.newTilePositionX, this.newTilePositionY, this.newTileType);
-        newTile.anchor.setTo(0.5, 0.5)
-        newTile.events.onDragStop.add(this.onDragStop, this);
-        newTile.events.onDragUpdate.add(this.onDragUpdate, this);
-        newTile.inputEnabled = true;
-        newTile.input.enableDrag(true);
-        },
+        this.bottomHexCell = this.game.add.sprite(this.newTilePositionX, this.newTilePositionY, this.newTileType);
+        this.bottomHexCell.anchor.setTo(0.5, 0.5)
+        this.bottomHexCell.inputEnabled = true
+        this.bottomHexCell.input.enableDrag(true)
+        this.bottomHexCell.events.onDragStop.add(this.onDragStop, this);
+        this.bottomHexCell.events.onDragUpdate.add(this.onDragUpdate, this);
+    },
+
+    disableUserIO: function() {
+        if (this.bottomHexCell != null) {
+            this.bottomHexCell.inputEnabled = false
+        }
+    },
+
+    enableUserIO: function() {
+        if (this.bottomHexCell != null) {
+            this.bottomHexCell.inputEnabled = true
+        }
+    },
 
     getHexCellForIndex: function(x, y) {
         if (Math.abs(x) + Math.abs(y) > 4) {
