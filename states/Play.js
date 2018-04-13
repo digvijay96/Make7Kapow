@@ -23,6 +23,7 @@ play.prototype = {
         this.cellsArray = [];
 
         this.highlighter = null;
+        this.scoreLabel = null;
 
         this.tileArray = ['1', '2', '3'];
 
@@ -34,16 +35,15 @@ play.prototype = {
         this.numberSeven = 7;
         this.visitedCells = [];
         this.cellIndicesToBeMerged = [];
+        this.numberOfMoves = 0
     },
 
     create: function() {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.add.image(80, 100, 'board');
-
-
-
         this.createHexCells();
         this.createNewTile();
+        this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
     },
 
     update: function() {
@@ -128,17 +128,24 @@ play.prototype = {
             xPosition = this.cellsArray[matchingIndex].frame[0];
             yPosition = this.cellsArray[matchingIndex].frame[1];
             this.cellsArray[matchingIndex].sprite = sprite;
-            this.mergeCellsIfRequired(matchingIndex);
         }
 
         if(xPosition != this.newTilePositionX && yPosition != this.newTilePositionY) {
             sprite.position.setTo(xPosition, yPosition);
             sprite.input.draggable = false;
+            this.mergeCellsIfRequired(matchingIndex);
+            this.incrementScore()
 
             this.isLastTileSet = true;
         } else {
             sprite.position.setTo(this.newTilePositionX, this.newTilePositionY);
         }
+
+    },
+
+    incrementScore: function() {
+        this.numberOfMoves += 1;
+        this.scoreLabel.text = 'Moves: ' + this.numberOfMoves;
 
     },
 
