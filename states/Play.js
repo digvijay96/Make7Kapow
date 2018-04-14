@@ -39,6 +39,13 @@ play.prototype = {
         this.maxNumberForNewTile = 3;
         this.spriteKeyForNULLValue = '0'
         this.defaultDifficultyLevel = 'EASY'
+        
+        this.tweensArray = []
+        this.mergeFinalX = null
+        this.mergeFinalY = null
+        this.mergeDestinationIndex = null
+        this.mergeResultantNumber = null
+
     },
 
     create: function() {
@@ -138,37 +145,65 @@ play.prototype = {
         gameInfo.get('game').state.start('GameOver')
     },
 
-    mergeCells: function(destinationIndex) {
-        const currentSpriteNumber = parseInt(this.cellsArray[destinationIndex].sprite.key);
-        const resultantNumber = currentSpriteNumber + 1;
-        this.updateMaxNumberReached(resultantNumber);
-        const resultantSpriteKey = (resultantNumber).toString();
-        const finalXPos = this.cellsArray[destinationIndex].frame[0],
-            finalYPos = this.cellsArray[destinationIndex].frame[1];
-        const maxTime = 500;
-        const defaultSpeed = 60;
-        for (var index = 0; index < this.cellIndicesToBeMerged.length; index++) {
-            if (this.cellIndicesToBeMerged[index] != destinationIndex ) {
-                var cell = this.cellsArray[this.cellIndicesToBeMerged[index]];
-                gameInfo.get("game").physics.arcade.enable(cell.sprite);
-                gameInfo.get("game").physics.arcade.moveToXY(cell.sprite, finalXPos, finalYPos, defaultSpeed, maxTime)
+    endMergeAnimation: function() {
+        var canEndAnimation = true
+        for(var index = 0; index < this.tweensArray.length && canEndAnimation; index++) {
+            if (this.tweensArray[index].isRunning) {
+                canEndAnimation = false
             }
         }
-        setTimeout(function() {
+        if (canEndAnimation) {
             for (var index = 0; index < this.cellIndicesToBeMerged.length; index++) {
                 var cell = this.cellsArray[this.cellIndicesToBeMerged[index]];
                 cell.sprite.destroy();
                 cell.sprite = null
             }
-            var sprite = gameInfo.get("game").add.sprite(finalXPos, finalYPos, resultantSpriteKey);
+            let resultantSpriteKey = this.mergeResultantNumber.toString();
+
+            var sprite = gameInfo.get("game").add.sprite(this.mergeFinalX, this.mergeFinalY, resultantSpriteKey);
             sprite.anchor.setTo(0.5, 0.5);
-            this.cellsArray[destinationIndex].sprite = sprite;
-            if (resultantNumber < this.numberSeven) {
-                this.mergeCellsIfRequired(destinationIndex)
+            this.cellsArray[this.mergeDestinationIndex].sprite = sprite;
+            if (this.mergeResultantNumber < this.numberSeven) {
+                this.mergeCellsIfRequired(this.mergeDestinationIndex)
             } else {
                 this.declareGameEnd(true)
             }
-        }.bind(this), maxTime);
+        }
+    },
+
+    mergeCells: function(destinationIndex) {
+        const currentSpriteNumber = parseInt(this.cellsArray[destinationIndex].sprite.key);
+        const resultantNumber = currentSpriteNumber + 1;
+        this.updateMaxNumberReached(resultantNumber);
+
+        const resultantSpriteKey = (resultantNumber).toString();
+        const finalXPos = this.cellsArray[destinationIndex].frame[0],
+            finalYPos = this.cellsArray[destinationIndex].frame[1];
+
+        this.mergeDestinationIndex = destinationIndex;
+        this.mergeFinalX = finalXPos;
+        this.mergeFinalY = finalYPos;
+        this.mergeResultantNumber = resultantNumber;
+        this.tweensArray = []
+
+        const maxTime = 500;
+        const defaultSpeed = 60;
+        for (var index = 0; index < this.cellIndicesToBeMerged.length; index++) {
+            if (this.cellIndicesToBeMerged[index] != destinationIndex ) {
+                var cell = this.cellsArray[this.cellIndicesToBeMerged[index]];
+
+                gameInfo.get("game").physics.arcade.enable(cell.sprite);
+                var moveTween = gameInfo.get("game").add.tween(cell.sprite).to({x: finalXPos, y: finalYPos}, maxTime, Phaser.Easing.Linear.None);
+                moveTween.onComplete.add(function() { this.endMergeAnimation() }.bind(this));
+                this.tweensArray.push(moveTween)
+
+                var fadeTween = gameInfo.get("game").add.tween(cell.sprite).to({ alpha: 0.9 }, maxTime, Phaser.Easing.Linear.None);
+                fadeTween.onComplete.add(function() { this.endMergeAnimation() }.bind(this));
+                this.tweensArray.push(fadeTween);
+                moveTween.start();
+                fadeTween.start();
+            }
+        }
     },
 
      getHexCellForIndex: function(x, y) {
