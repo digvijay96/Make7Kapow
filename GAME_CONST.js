@@ -7,6 +7,7 @@ const GAME_CONST = {
     STATES: {
         BOOT: "Boot",
         LOADING: "Loading",
+        MENU: "Menu",
         PLAY: "Play",
         GAMEOVER: "GameOver"
     },

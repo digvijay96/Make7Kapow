@@ -8,16 +8,16 @@ play.prototype = {
     preload: function() {
 
         gameInfo.set("screenState",GAME_CONST.STATES.PLAY);
-        this.load.image('board', 'assets/board.png');
-        this.load.image('1', 'assets/1.png');
-        this.load.image('2', 'assets/2.png');
-        this.load.image('3', 'assets/3.png');
-        this.load.image('4', 'assets/4.png');
-        this.load.image('5', 'assets/5.png');
-        this.load.image('6', 'assets/6.png');
-        this.load.image('7', 'assets/7.png');
-
         // Math.seedrandom('45');
+
+        this.load.image('board', 'assets/images/base.png');
+        this.load.image('1', 'assets/images/1.png');
+        this.load.image('2', 'assets/images/2.png');
+        this.load.image('3', 'assets/images/3.png');
+        this.load.image('4', 'assets/images/4.png');
+        this.load.image('5', 'assets/images/5.png');
+        this.load.image('6', 'assets/images/6.png');
+        this.load.image('7', 'assets/7.png');
 
         this.cellsArray = [];
 
@@ -26,10 +26,14 @@ play.prototype = {
 
         this.tileArray = ['1', '2', '3', '4'];
 
-        this.newTilePositionX = 246;
-        this.newTilePositionY = 532;
+        this.newTilePositionX = this.world.centerX;
+        this.newTilePositionY = 1632;
 
         this.directions = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]];
+        this.cellFrames = [[347, 542], [543, 542], [739, 542], [249, 710], [445, 710], [641, 710], [837, 710],
+            [152, 876], [348, 876], [544, 876], [737, 876], [931, 876], [249, 1043], [445, 1043], [641, 1043], [834, 1043],
+            [347, 1210], [543, 1210], [739, 1210]];
+        this.cellIndices = [[-2,-2],[0,-2],[2,-2],[-3,-1],[-1,-1],[1,-1],[3,-1],[-4,0],[-2,0],[0,0],[2,0],[4,0],[-3,1],[-1,1],[1,1],[3,1],[-2,2],[0,2],[2,2]];
         this.cellsArraySize = 19;
         this.numberSeven = 7;
         this.visitedCells = [];
@@ -37,25 +41,37 @@ play.prototype = {
         this.numberOfMoves = 0;
         this.bottomHexCell = null;
         this.maxNumberForNewTile = 3;
-        this.spriteKeyForNULLValue = '0'
-        this.defaultDifficultyLevel = 'EASY'
+        this.spriteKeyForNULLValue = '0';
+        this.defaultDifficultyLevel = 'EASY';
         
-        this.tweensArray = []
-        this.mergeFinalX = null
-        this.mergeFinalY = null
-        this.mergeDestinationIndex = null
+        this.tweensArray = [];
+        this.mergeFinalX = null;
+        this.mergeFinalY = null;
+        this.mergeDestinationIndex = null;
         this.mergeResultantNumber = null
 
     },
 
     create: function() {
         gameInfo.get("game").physics.startSystem(Phaser.Physics.ARCADE);
-        gameInfo.get("game").add.image(80, 100, 'board');
+        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
+        background.anchor.setTo(0.5);
+
+        var backButton = this.add.image(94, 91, 'back');
+        backButton.anchor.setTo(0.5);
+        backButton.inputEnabled = true;
+        backButton.events.onInputUp.add(function() {
+            kapowClientController.handleBackButton();
+        }, this);
+
+        var board = gameInfo.get("game").add.image(this.world.centerX, 875, 'board');
+        board.anchor.setTo(0.5);
         this.createHexCells();
         this.createNewTile(true);
-        this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
-        this.disableUserIO()
-        this.restoreRoomState()
+        this.scoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 92, '0', { fontSize: '140px', fill: '#9a97a6'});
+        this.scoreLabel.anchor.setTo(0.5);
+        this.disableUserIO();
+        this.restoreRoomState();
     },
 
     restoreRoomState: function() {
@@ -65,7 +81,7 @@ play.prototype = {
             } else {
                 this.numberOfMoves = parseInt(movesCount)
             }
-            this.updateScore(false)
+            this.updateScore(false);
             console.log('restored' + GAME_CONST.ROOM_STORE.MOVES_COUNT + ': ' + this.numberOfMoves)
         }.bind(this));
 
@@ -80,7 +96,7 @@ play.prototype = {
 
         kapowRoomStore.get(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, function(difficultyLevel) {
             if (!difficultyLevel) {
-                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
+                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, this.defaultDifficultyLevel);
                 kapowRoomStore.set(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
             } else {
                 gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficultyLevel)
@@ -91,7 +107,7 @@ play.prototype = {
 
         kapowRoomStore.get(GAME_CONST.ROOM_STORE.HEX_CELL_SPRITE_KEYS, function(keysString) {
             if (keysString != null) {
-                let keysArray = JSON.parse(keysString)
+                var keysArray = JSON.parse(keysString);
                 for(var index = 0 ; index < keysArray.length; index++) {
                     if (keysArray[index] != this.spriteKeyForNULLValue) {
                         this.setSpriteForHexCellWithKeyAndIndex(keysArray[index], index)
@@ -112,7 +128,7 @@ play.prototype = {
 
         var spriteKeys = [];
         for(var index = 0 ; index < this.cellsArray.length ; index++) {
-            let sprite = this.cellsArray[index].sprite;
+            var sprite = this.cellsArray[index].sprite;
             if (sprite != null) {
                 spriteKeys.push(sprite.key);
             } else {
@@ -123,7 +139,7 @@ play.prototype = {
     },
 
     setSpriteForHexCellWithKeyAndIndex: function(spriteKey, index) {
-        let xPosition = this.cellsArray[index].frame[0],
+        var xPosition = this.cellsArray[index].frame[0],
             yPosition = this.cellsArray[index].frame[1];
         this.cellsArray[index].sprite = this.game.add.sprite(xPosition, yPosition, spriteKey);
         this.cellsArray[index].sprite.anchor.setTo(0.5, 0.5)
@@ -141,8 +157,8 @@ play.prototype = {
             gameInfo.set('won', false);
             console.log('YOU LOST')
         }
-        gameInfo.set('score', this.numberOfMoves)
-        gameInfo.get('game').state.start('GameOver')
+        gameInfo.set('score', this.numberOfMoves);
+        gameInfo.get('game').state.start('GameOver');
     },
 
     endMergeAnimation: function() {
@@ -158,7 +174,7 @@ play.prototype = {
                 cell.sprite.destroy();
                 cell.sprite = null
             }
-            let resultantSpriteKey = this.mergeResultantNumber.toString();
+            var resultantSpriteKey = this.mergeResultantNumber.toString();
 
             var sprite = gameInfo.get("game").add.sprite(this.mergeFinalX, this.mergeFinalY, resultantSpriteKey);
             sprite.anchor.setTo(0.5, 0.5);
@@ -302,11 +318,14 @@ play.prototype = {
 
     },
 
-    updateScore: function(shouldIncrement = true) {
+    updateScore: function(shouldIncrement) {
+        if (shouldIncrement === undefined || shouldIncrement === null) {
+            shouldIncrement = true;
+        }
         if (shouldIncrement) {
             this.numberOfMoves += 1;
         }
-        this.scoreLabel.text = 'Moves: ' + this.numberOfMoves;
+        this.scoreLabel.text = this.numberOfMoves.toString();
     },
 
     removeHighlighter: function() {
@@ -318,7 +337,7 @@ play.prototype = {
 
     checkMatchingTile: function(pointer) {
         for(var index = 0; index < this.cellsArray.length; index++) {
-            if((Math.abs(pointer.x - this.cellsArray[index].frame[0]) + Math.abs(pointer.y - this.cellsArray[index].frame[1]) < 30) &&
+            if((Math.abs(pointer.x - this.cellsArray[index].frame[0]) + Math.abs(pointer.y - this.cellsArray[index].frame[1]) < 100) &&
                 this.cellsArray[index].sprite == null) {
                 return index;
             }
@@ -363,24 +382,8 @@ play.prototype = {
     },
 
     createHexCells: function() {
-            this.cellsArray.push(createCellObject([-2,-2], [188, 150], null));
-            this.cellsArray.push(createCellObject([0,-2], [252, 150], null));
-            this.cellsArray.push(createCellObject([2,-2], [316, 150], null));
-            this.cellsArray.push(createCellObject([-3,-1], [156, 206], null));
-            this.cellsArray.push(createCellObject([-1,-1], [220, 206], null));
-            this.cellsArray.push(createCellObject([1,-1], [284, 206], null));
-            this.cellsArray.push(createCellObject([3,-1], [348, 206], null));
-            this.cellsArray.push(createCellObject([-4,0], [124, 262], null));
-            this.cellsArray.push(createCellObject([-2,0], [188, 262], null));
-            this.cellsArray.push(createCellObject([0,0], [252, 262], null));
-            this.cellsArray.push(createCellObject([2,0], [316, 262], null));
-            this.cellsArray.push(createCellObject([4,0], [380, 262], null));
-            this.cellsArray.push(createCellObject([-3,1], [156, 318], null));
-            this.cellsArray.push(createCellObject([-1,1], [220, 318], null));
-            this.cellsArray.push(createCellObject([1,1], [284, 318], null));
-            this.cellsArray.push(createCellObject([3,1], [348, 318], null));
-            this.cellsArray.push(createCellObject([-2,2], [188, 374], null));
-            this.cellsArray.push(createCellObject([0,2], [252, 374], null));
-            this.cellsArray.push(createCellObject([2,2], [316, 374], null));
+        for(var i = 0; i < this.cellIndices.length; i++) {
+            this.cellsArray.push(createCellObject(this.cellIndices[i], this.cellFrames[i], null));
+        }
     }
-}
+};

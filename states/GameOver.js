@@ -6,28 +6,100 @@ var gameOver = function() {
 gameOver.prototype = {
     preload: function() {
         gameInfo.set("screenState",GAME_CONST.STATES.GAMEOVER);
-        this.load.image('won', 'assets/you-won.png');
-        this.load.image('lost', 'assets/you-lose.png');
-        this.load.image('cell', 'assets/play-button.png');
-
+        this.load.image('leaderboardButton', 'assets/images/leader.png');
+        this.load.image('resetButton', 'assets/images/reset.png');
     },
 
     create: function() {
         this.endSoloGame();
         this.postScoreIfWon();
 
-        var playImage = gameInfo.get("game").add.image(this.game.world.centerX, this.game.world.centerY, 'cell');
-        playImage.anchor.setTo(0.5);
-        playImage.scale.setTo(4);
+        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
+        background.anchor.setTo(0.5);
+        this.resultLabel = this.game.add.text(gameInfo.get("game").world.centerX, 394, '', {
+            fontSize: '140px',
+            fill: '#d85353'
+        });
+        this.resultLabel.anchor.setTo(0.5);
 
-        playImage.inputEnabled = true;
-        playImage.events.onInputDown.add(this.listener, this);
+        this.scoreHeading = this.game.add.text(gameInfo.get("game").world.centerX, 722, 'SCORE', {
+            fontSize: '90px',
+            fill: '#d95a65'
+        });
+        this.scoreHeading.anchor.setTo(0.5);
+        this.scoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 828, '', {
+            fontSize: '120px',
+            fill: '#9a97a6'
+        });
+        this.scoreLabel.anchor.setTo(0.5);
+
+        this.highscoreHeading = this.game.add.text(gameInfo.get("game").world.centerX, 1028, 'HIGH SCORE', {
+            fontSize: '90px',
+            fill: '#d95a65'
+        });
+        this.highscoreHeading.anchor.setTo(0.5);
+        this.highscoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 1140, '', {
+            fontSize: '120px',
+            fill: '#9a97a6'
+        });
+        this.highscoreLabel.anchor.setTo(0.5);
+
+        var leaderboardButton = this.add.image(328, 1482, 'leaderboardButton');
+        leaderboardButton.anchor.setTo(0.5);
+        leaderboardButton.inputEnabled = true;
+        leaderboardButton.events.onInputUp.add(function() {
+            var parameters = {'metric':'score','interval':'daily'};
+            kapow.boards.displayScoreboard(parameters);
+        }, this);
+
+        var resetButton = this.add.image(752, 1482, 'resetButton');
+        resetButton.anchor.setTo(0.5);
+        resetButton.inputEnabled = true;
+        resetButton.events.onInputUp.add(function() {
+            gameInfo.get("game").state.start(GAME_CONST.STATES.MENU);
+        }, this);
+
+        this.fetchHighscore();
+
+        this.updateResultText();
+
+        var backButton = this.add.image(94, 91, 'back');
+        backButton.anchor.setTo(0.5);
+        backButton.inputEnabled = true;
+        backButton.events.onInputUp.add(function() {
+            kapowClientController.handleBackButton();
+        }, this);
 
     },
 
-     listener: function() {
-        var parameters = {'metric':'score','interval':'daily'};
-          kapow.boards.displayScoreboard(parameters)
+    fetchHighscore: function () {
+        kapowGameStore.get("highScore", function(highScore){
+            this.updateHighscore(highScore);
+        });
+    },
+
+    updateHighscore: function(highscore) {
+        if(highscore != null && highscore != undefined) {
+            this.highscoreLabel.text = highscore;
+        } else {
+            if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
+                this.highscoreLabel.text = gameInfo.get("score");
+            } else {
+                this.highscoreLabel.text = "-";
+            }
+        }
+    },
+
+    updateResultText: function() {
+
+        if(gameInfo.won == true) {
+            this.resultLabel.text = "YOU WIN";
+            this.scoreLabel.text = gameInfo.get('score');
+
+        } else {
+            this.resultLabel.text = "YOU LOST";
+            this.scoreLabel.text = "-";
+        }
     },
 
     endSoloGame: function() {

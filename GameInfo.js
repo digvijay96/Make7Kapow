@@ -6,6 +6,7 @@ function GameInfoStore() { // TODO : do we actually need to initialize null valu
     this.game = null;
     this.score = null;
     this.screenState = null;
+    this.difficulty_level = null;
 }
 
 GameInfoStore.prototype.get = function (key) {

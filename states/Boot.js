@@ -6,7 +6,11 @@ var boot = function(game) {
 boot.prototype = {
     preload: function() {
         gameInfo.set("screenState",GAME_CONST.STATES.BOOT);
-        this.game.load.image("background", "assets/background.png");
+        this.load.crossOrigin = 'anonymous';
+        this.load.image('background', 'assets/images/bg.png');
+        this.load.image('bgColor', 'assets/images/background.png');
+        this.load.image("progressBackground", "assets/images/bar.png");
+        this.load.image("progressBar", "assets/images/loading-bar.png");
     },
 
     create: function() {
@@ -17,4 +21,4 @@ boot.prototype = {
         this.input.maxPointers = 1;
         this.state.start(GAME_CONST.STATES.LOADING);
     }
-}
+};

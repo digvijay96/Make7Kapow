@@ -2,6 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7822f9f5-174b-47db-b87b-834ee959fccc" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.41.17 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.54.04 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.54.18 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.54.35 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.55.20 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.55.26 PM.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/images/Screen Shot 2018-04-11 at 10.57.19 PM.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME_CONST.js" afterPath="$PROJECT_DIR$/GAME_CONST.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameInfo.js" afterPath="$PROJECT_DIR$/GameInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameManager.js" afterPath="$PROJECT_DIR$/GameManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Menu.js" afterPath="$PROJECT_DIR$/Menu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/Boot.js" afterPath="$PROJECT_DIR$/states/Boot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/GameOver.js" afterPath="$PROJECT_DIR$/states/GameOver.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/Loading.js" afterPath="$PROJECT_DIR$/states/Loading.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/Play.js" afterPath="$PROJECT_DIR$/states/Play.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -16,21 +31,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="Play.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/states/Play.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="41" lean-forward="true" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+            <state relative-caret-position="266">
+              <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="57" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameInfo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GameInfo.js">
+      <file leaf-file-name="KapowClientController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/KapowClientController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="285">
+              <caret line="19" column="38" lean-forward="false" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameManager.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GameManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameOver.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/states/GameOver.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -39,58 +74,28 @@
       <file leaf-file-name="Boot.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/states/Boot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="49" lean-forward="true" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Play.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/states/Play.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="61" lean-forward="true" selection-start-line="41" selection-start-column="61" selection-end-line="41" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Main.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+              <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameOver.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/states/GameOver.js">
+      <file leaf-file-name="KapowGameStore.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/KapowGameStore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+            <state relative-caret-position="15">
+              <caret line="1" column="81" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="81" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Menu.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Menu.js">
+      <file leaf-file-name="GameInfo.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GameInfo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Loading.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/states/Loading.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="390">
+              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -99,18 +104,28 @@
       <file leaf-file-name="GAME_CONST.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GAME_CONST.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="2" lean-forward="true" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+            <state relative-caret-position="135">
+              <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HexCell.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HexCell.js">
+      <file leaf-file-name="Loading.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/states/Loading.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="62" lean-forward="true" selection-start-line="1" selection-start-column="62" selection-end-line="1" selection-end-column="62" />
+            <state relative-caret-position="165">
+              <caret line="11" column="44" lean-forward="false" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Menu.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Menu.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="12" column="45" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -136,6 +151,15 @@
       <find>cellIndicesToBeMerged</find>
       <find>console</find>
       <find>declareGameEnd</find>
+      <find>this.</find>
+      <find>game.add</find>
+      <find>updateMaxNumberReached</find>
+      <find>defaultDifficultyLevel</find>
+      <find>easy</find>
+      <find>highlighter</find>
+      <find>update</find>
+      <find>gameover</find>
+      <find>'score'</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,17 +171,18 @@
         <option value="$PROJECT_DIR$/Boot.js" />
         <option value="$PROJECT_DIR$/HexCell.js" />
         <option value="$PROJECT_DIR$/randomGenerator.js" />
-        <option value="$PROJECT_DIR$/GAME_CONST.js" />
         <option value="$PROJECT_DIR$/states/Preload.js" />
-        <option value="$PROJECT_DIR$/Menu.js" />
-        <option value="$PROJECT_DIR$/states/Loading.js" />
-        <option value="$PROJECT_DIR$/states/Boot.js" />
-        <option value="$PROJECT_DIR$/GameInfo.js" />
-        <option value="$PROJECT_DIR$/Main.js" />
         <option value="$PROJECT_DIR$/GameOver.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/states/GameOver.js" />
+        <option value="$PROJECT_DIR$/GameInfo.js" />
+        <option value="$PROJECT_DIR$/GAME_CONST.js" />
+        <option value="$PROJECT_DIR$/Main.js" />
+        <option value="$PROJECT_DIR$/Menu.js" />
+        <option value="$PROJECT_DIR$/GameManager.js" />
+        <option value="$PROJECT_DIR$/states/Loading.js" />
+        <option value="$PROJECT_DIR$/states/Boot.js" />
         <option value="$PROJECT_DIR$/states/Play.js" />
+        <option value="$PROJECT_DIR$/states/GameOver.js" />
       </list>
     </option>
   </component>
@@ -167,7 +192,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="-141" />
     <option name="y" value="-1050" />
     <option name="width" value="1680" />
@@ -202,6 +227,12 @@
               <item name="Make7Kapow" type="b2602c69:ProjectViewProjectNode" />
               <item name="Make7Kapow" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Make7Kapow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Make7Kapow" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Make7Kapow" type="b2602c69:ProjectViewProjectNode" />
@@ -252,10 +283,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34738000" />
+    <option name="totallyTimeSpent" value="55000000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-141" y="-1050" width="1680" height="1050" extended-state="6" />
+    <frame x="-141" y="-1050" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21428572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -284,7 +315,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -460,15 +491,7 @@
     <entry file="file://$PROJECT_DIR$/HexCell.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="62" lean-forward="true" selection-start-line="1" selection-start-column="62" selection-end-line="1" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/Loading.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="1" column="62" lean-forward="false" selection-start-line="1" selection-start-column="62" selection-end-line="1" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -481,66 +504,116 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GameInfo.js">
+    <entry file="file://$PROJECT_DIR$/assets/images/bg.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/bar.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="45">
+          <caret line="3" column="67" lean-forward="false" selection-start-line="3" selection-start-column="67" selection-end-line="3" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/states/GameOver.js">
+    <entry file="file://$PROJECT_DIR$/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Menu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/Play.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="61" lean-forward="true" selection-start-line="41" selection-start-column="61" selection-end-line="41" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GAME_CONST.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="2" lean-forward="true" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+        <state relative-caret-position="75">
+          <caret line="5" column="42" lean-forward="false" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="41" lean-forward="true" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+        <state relative-caret-position="285">
+          <caret line="19" column="35" lean-forward="true" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KapowGameStore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="81" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GAME_CONST.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameInfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Menu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="45" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KapowClientController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="38" lean-forward="false" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/states/Loading.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="44" lean-forward="false" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/states/Boot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="49" lean-forward="true" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+        <state relative-caret-position="150">
+          <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.js">
+    <entry file="file://$PROJECT_DIR$/states/Play.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+        <state relative-caret-position="266">
+          <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="57" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/states/GameOver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
           <folding />
         </state>
       </provider>
