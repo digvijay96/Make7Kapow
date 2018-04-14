@@ -2,8 +2,11 @@
     startGame() {
         this.startState(GAME_CONST.STATES.BOOT);
     },
+    restartExistingGame() {
+        this.startState(GAME_CONST.STATES.PLAY)
+    },
     startState(state) {
-    	gameInfo.set("screenState",GAME_CONST.STATES.BOOT);
+    	gameInfo.set("screenState", state);
         gameInfo.get("game").state.start(state);
     },
     resetGameState() {

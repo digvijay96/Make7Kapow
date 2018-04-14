@@ -4,7 +4,7 @@ function GameInfoStore() { // TODO : do we actually need to initialize null valu
     this.gameType = null;
     this.won = false;
     this.game = null;
-    this.score = 10000;
+    this.score = null;
     this.screenState = null;
 }
 

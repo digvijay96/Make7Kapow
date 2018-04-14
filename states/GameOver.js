@@ -22,12 +22,12 @@ gameOver.prototype = {
 
         playImage.inputEnabled = true;
         playImage.events.onInputDown.add(this.listener, this);
+
     },
 
      listener: function() {
         var parameters = {'metric':'score','interval':'daily'};
           kapow.boards.displayScoreboard(parameters)
-       // this.game.state.start("Play");
     },
 
     endSoloGame: function() {
@@ -36,10 +36,11 @@ gameOver.prototype = {
         }, function(){
             console.log("End solo game failure");
         });
+        // nullify room and empty gameInfo
     },
 
     postScoreIfWon: function() {
-           if(gameInfo.get('won') == true) {
+           if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
                 this.checkIfHighScoreAndSave();
                 kapow.invokeRPC('postScore', {"score": gameInfo.get("score")}, function() {
                     console.log("Success Posting Score");

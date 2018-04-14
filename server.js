@@ -1,11 +1,4 @@
 var mysql = require('mysql');
-
-const GAME_CONST = {
-    CELL_COUNT: 9,
-    TIMEOUT_DELAY: 1,
-    ROOM_DELETE_DELAY: 2880
-};
-
 var game = {
     onMessageDelivered: function (data) {
         console.log("SERVER onMessageDelivered - " + JSON.stringify(data));

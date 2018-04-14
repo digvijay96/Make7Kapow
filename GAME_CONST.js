@@ -15,5 +15,12 @@ const GAME_CONST = {
             THEME: 0.2,
             TAP: 0.1
         }
-    }
+    },
+    ROOM_STORE: {
+        MOVES_COUNT: "moves_count",
+        MAX_NUMBER_UNLOCKED: "max_number_unlocked",
+        DIFFICULTY_LEVEL: "difficulty_level",
+        HEX_CELL_SPRITE_KEYS: "hex_cell_sprite_keys"
+    },
+    DIFFICULTY_LEVEL: "difficulty_level"
 };

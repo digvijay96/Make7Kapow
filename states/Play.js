@@ -17,7 +17,7 @@ play.prototype = {
         this.load.image('6', 'assets/6.png');
         this.load.image('7', 'assets/7.png');
 
-        Math.seedrandom('45');
+        // Math.seedrandom('45');
 
         this.cellsArray = [];
 
@@ -37,6 +37,8 @@ play.prototype = {
         this.numberOfMoves = 0;
         this.bottomHexCell = null;
         this.maxNumberForNewTile = 3;
+        this.spriteKeyForNULLValue = '0'
+        this.defaultDifficultyLevel = 'EASY'
     },
 
     create: function() {
@@ -44,10 +46,81 @@ play.prototype = {
         gameInfo.get("game").add.image(80, 100, 'board');
         this.createHexCells();
         this.createNewTile(true);
-        this.score = 30;
-        this.declareGameEnd(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
-        gameInfo.set('difficulty_level', 'MEDIUM');
+        this.disableUserIO()
+        this.restoreRoomState()
+    },
+
+    restoreRoomState: function() {
+        kapowRoomStore.get(GAME_CONST.ROOM_STORE.MOVES_COUNT, function(movesCount) {
+            if(!movesCount) {
+                this.numberOfMoves = 0
+            } else {
+                this.numberOfMoves = parseInt(movesCount)
+            }
+            this.updateScore(false)
+            console.log('restored' + GAME_CONST.ROOM_STORE.MOVES_COUNT + ': ' + this.numberOfMoves)
+        }.bind(this));
+
+        kapowRoomStore.get(GAME_CONST.ROOM_STORE.MAX_NUMBER_UNLOCKED, function(maxNumberUnlocked) {
+            if (!maxNumberUnlocked) {
+                this.maxNumberForNewTile = 3
+            } else {
+                this.maxNumberForNewTile = parseInt(maxNumberUnlocked)
+            }
+            console.log('restored' + GAME_CONST.ROOM_STORE.MAX_NUMBER_UNLOCKED + ': ' + this.maxNumberForNewTile)
+        }.bind(this));
+
+        kapowRoomStore.get(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, function(difficultyLevel) {
+            if (!difficultyLevel) {
+                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
+                kapowRoomStore.set(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
+            } else {
+                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficultyLevel)
+            }
+            console.log('restored' + GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL + ': ' + gameInfo.get('difficultyLevel'))
+
+        }.bind(this));
+
+        kapowRoomStore.get(GAME_CONST.ROOM_STORE.HEX_CELL_SPRITE_KEYS, function(keysString) {
+            if (keysString != null) {
+                let keysArray = JSON.parse(keysString)
+                for(var index = 0 ; index < keysArray.length; index++) {
+                    if (keysArray[index] != this.spriteKeyForNULLValue) {
+                        this.setSpriteForHexCellWithKeyAndIndex(keysArray[index], index)
+                        console.log('restoring sprite with key :(' + keysArray[index] + ') at index: ' + index )
+                    }
+                }
+            }
+            this.enableUserIO()
+
+        }.bind(this), function() {
+            this.enableUserIO()
+        })
+    },
+
+    persistRoomState: function() {
+        kapowRoomStore.set(GAME_CONST.ROOM_STORE.MOVES_COUNT, this.numberOfMoves);
+        kapowRoomStore.set(GAME_CONST.ROOM_STORE.MAX_NUMBER_UNLOCKED,this.maxNumberForNewTile);
+
+        var spriteKeys = [];
+        for(var index = 0 ; index < this.cellsArray.length ; index++) {
+            let sprite = this.cellsArray[index].sprite;
+            if (sprite != null) {
+                spriteKeys.push(sprite.key);
+            } else {
+                spriteKeys.push(this.spriteKeyForNULLValue);
+            }
+        }
+        kapowRoomStore.set(GAME_CONST.ROOM_STORE.HEX_CELL_SPRITE_KEYS, spriteKeys);
+    },
+
+    setSpriteForHexCellWithKeyAndIndex: function(spriteKey, index) {
+        let xPosition = this.cellsArray[index].frame[0],
+            yPosition = this.cellsArray[index].frame[1];
+        this.cellsArray[index].sprite = this.game.add.sprite(xPosition, yPosition, spriteKey);
+        this.cellsArray[index].sprite.anchor.setTo(0.5, 0.5)
+        this.cellsArray[index].sprite.inputEnabled = false
     },
 
     update: function() {
@@ -61,7 +134,7 @@ play.prototype = {
             gameInfo.set('won', false);
             console.log('YOU LOST')
         }
-        gameInfo.set('score', this.score)
+        gameInfo.set('score', this.numberOfMoves)
         gameInfo.get('game').state.start('GameOver')
     },
 
@@ -150,8 +223,9 @@ play.prototype = {
     },
 
     prepareForNextMove: function() {
-        this.enableUserIO()
         this.checkIfUserLost()
+        this.persistRoomState()
+        this.enableUserIO()
     },
 
     onDragUpdate: function(sprite, pointer) {
@@ -183,8 +257,8 @@ play.prototype = {
             sprite.input.draggable = false;
             this.createNewTile();
             this.disableUserIO()
+            this.updateScore()
             this.mergeCellsIfRequired(matchingIndex);
-            this.incrementScore()
 
         } else {
             sprite.position.setTo(this.newTilePositionX, this.newTilePositionY);
@@ -192,10 +266,11 @@ play.prototype = {
 
     },
 
-    incrementScore: function() {
-        this.numberOfMoves += 1;
+    updateScore: function(shouldIncrement = true) {
+        if (shouldIncrement) {
+            this.numberOfMoves += 1;
+        }
         this.scoreLabel.text = 'Moves: ' + this.numberOfMoves;
-
     },
 
     removeHighlighter: function() {
@@ -216,11 +291,11 @@ play.prototype = {
     },
 
     updateMaxNumberReached: function(currentNumber) {
-        if (gameInfo.get('difficulty_level') == 'EASY') {
+        if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'EASY') {
             if (currentNumber >= 4) {
                 this.maxNumberForNewTile = 4;
             }
-        } else if (gameInfo.get('difficulty_level') == 'MEDIUM') {
+        } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'MEDIUM') {
             if (currentNumber >= 6) {
                 this.maxNumberForNewTile = 4;;
             }

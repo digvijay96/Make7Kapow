@@ -10,4 +10,5 @@
     game.state.add("GameOver", gameOver);
     // game.state.add("GameOver", gameOver);
     gameInfo.set("game",game);
+    // game.state.start('Play')
 }());

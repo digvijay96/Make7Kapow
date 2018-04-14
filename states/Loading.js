@@ -19,11 +19,12 @@ loading.prototype = {
     },
 
     listener: function() {
-             kapow.startSoloGame(function (roomDetail) {
+        kapow.startSoloGame(function (roomDetail) {
+            gameInfo.set('room', roomDetail)
             gameInfo.get("game").state.start(GAME_CONST.STATES.PLAY);
+            console.log('room received in onLOAD: ', roomDetail)
         }, function (error) {
             console.log("startSoloGame Failed : ", error);
         });
-       // this.game.state.start("Play");
     }
 }
