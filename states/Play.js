@@ -186,7 +186,7 @@ play.prototype = {
         this.mergeResultantNumber = resultantNumber;
         this.tweensArray = []
 
-        const maxTime = 500;
+        const maxTime = 400;
         const defaultSpeed = 60;
         for (var index = 0; index < this.cellIndicesToBeMerged.length; index++) {
             if (this.cellIndicesToBeMerged[index] != destinationIndex ) {
@@ -296,7 +296,8 @@ play.prototype = {
             this.mergeCellsIfRequired(matchingIndex);
 
         } else {
-            sprite.position.setTo(this.newTilePositionX, this.newTilePositionY);
+            var moveTween = gameInfo.get("game").add.tween(sprite).to({x: this.newTilePositionX, y: this.newTilePositionY}, 200, Phaser.Easing.Linear.None);
+            moveTween.start()
         }
 
     },
