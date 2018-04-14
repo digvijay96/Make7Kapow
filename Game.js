@@ -41,4 +41,13 @@ window.game = {
     onRoomLockStatusChange: function (room) {
         console.log("Room Lock status changed for room :", room);
     }*/
+    onBackButtonPressed: function () {
+        kapowClientController.handleBackButton();
+    },
+    onPause: function () {
+        console.log('On Pause Triggered.');
+    },
+    onResume: function () {
+        console.log('On resume called');
+    },
 };

@@ -18,8 +18,27 @@ KapowClientController.prototype.handleOnLoad = function(room) {
     });
 };
 
-KapowClientController.prototype._loadScreen = function() {
-    
+KapowClientController.prototype.handleBackButton = function() {
+    console.log("Backbutton pressed");
+    var screenState = gameInfo.get("screenState");
+    console.log("Screenstate is ",screenState);
+    switch(screenState) {
+        case GAME_CONST.STATES.PLAY : {
+            console.log("Resetting game state");
+            GameManager.resetGameState();
+            break;
+        }
+        case GAME_CONST.STATES.GAMEOVER : {
+            console.log("Resetting game state");
+            GameManager.resetGameState();
+            break;
+        }
+        default : {
+            console.log("Calling kapow.close")
+            kapow.close();
+            break;
+        }
+    }
 };
 
 var kapowClientController = new KapowClientController();

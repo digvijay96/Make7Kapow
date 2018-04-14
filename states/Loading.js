@@ -5,6 +5,7 @@ var loading = function() {
 
 loading.prototype = {
     preload: function() {
+        gameInfo.set("screenState",GAME_CONST.STATES.LOADING);
         gameInfo.get("game").load.image('cell', 'assets/play-button.png');
     },
 

@@ -5,6 +5,7 @@ var boot = function(game) {
 
 boot.prototype = {
     preload: function() {
+        gameInfo.set("screenState",GAME_CONST.STATES.BOOT);
         this.game.load.image("background", "assets/background.png");
     },
 
@@ -14,6 +15,6 @@ boot.prototype = {
         this.scale.pageAlignVertically = true;
         this.scale.forceOrientation(false, true);
         this.input.maxPointers = 1;
-        this.state.start('Loading');
+        this.state.start(GAME_CONST.STATES.LOADING);
     }
 }

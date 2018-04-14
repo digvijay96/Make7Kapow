@@ -8,6 +8,7 @@ play.prototype = {
 
     preload: function() {
 
+        gameInfo.set("screenState",GAME_CONST.STATES.PLAY);
         this.load.image('board', 'assets/board.png');
         this.load.image('1', 'assets/1.png');
         this.load.image('2', 'assets/2.png');
@@ -43,6 +44,8 @@ play.prototype = {
         gameInfo.get("game").add.image(80, 100, 'board');
         this.createHexCells();
         this.createNewTile(true);
+        this.score = 30;
+        this.declareGameEnd(true);
         this.scoreLabel = this.game.add.text(32, 32, 'Moves: 0', { fontSize: '32px', fill: '#fff' });
     },
 

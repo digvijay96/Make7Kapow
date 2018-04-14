@@ -6,8 +6,9 @@ const GAME_CONST = {
     },
     STATES: {
         BOOT: "Boot",
-        PRELOAD: "Preload",
-        PLAY: "Play"
+        LOADING: "Loading",
+        PLAY: "Play",
+        GAMEOVER: "GameOver"
     },
     MUSIC: {
         VOLUME: {
