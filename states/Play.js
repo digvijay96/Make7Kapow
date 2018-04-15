@@ -156,6 +156,10 @@ play.prototype = {
     },
 
     endGamePlay: function(didMakeSeven) {
+        if (this.bottomHexCell != null && this.bottomHexCell != undefined && this.bottomHexCell.sprite != null) {
+            this.bottomHexCell.sprite.alpha = 0.4
+            this.disableUserIO()
+        }
         if(didMakeSeven == true) {
             for (var index = 0; index < this.cellsArray.length; index++) {
                 var cell = this.cellsArray[index];
