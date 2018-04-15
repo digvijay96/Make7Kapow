@@ -5,7 +5,7 @@ var menu = function(game) {
 
 menu.prototype = {
     preload: function() {
-
+  		gameInfo.set("screenState",GAME_CONST.STATES.MENU);
     },
 
     create: function() {
@@ -52,7 +52,7 @@ menu.prototype = {
     },
 
     setDifficultyLevel: function(difficulty) {
-        gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficulty);
+    	gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficulty)
         kapow.startSoloGame(function (roomDetail) {
             gameInfo.set('room', roomDetail);
             gameInfo.get("game").state.start(GAME_CONST.STATES.PLAY);
