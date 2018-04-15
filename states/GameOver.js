@@ -61,7 +61,7 @@ gameOver.prototype = {
         resetButton.anchor.setTo(0.5);
         resetButton.inputEnabled = true;
         resetButton.events.onInputUp.add(function() {
-            gameInfo.get("game").state.start(GAME_CONST.STATES.MENU);
+            this.resetGame();
         }, this);
 
         var backButton = this.add.image(94, 91, 'back');
@@ -70,6 +70,10 @@ gameOver.prototype = {
         backButton.events.onInputUp.add(function() {
             kapowClientController.handleBackButton();
         }, this);
+    },
+
+    resetGame: function() {
+        GameManager.restartGameWithSameDifficulty();
     },
 
     updateResultText: function() {
@@ -150,8 +154,8 @@ gameOver.prototype = {
             } else {
                 this.updateHighscore(highScore);
             }
-        }.bind(this), function() {
-            console.log("Failed to fetch highScore from gameStore")
+        }.bind(this), function(error) {
+            console.log("Failed to fetch highScore from gameStore with error: ", error)
             if (this.didUserWin() == true) {
                 this.updateHighscore(gameInfo.get('score'));
             } else {
