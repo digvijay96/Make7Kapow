@@ -54,6 +54,7 @@ play.prototype = {
     },
 
     create: function() {
+
         gameInfo.get("game").physics.startSystem(Phaser.Physics.ARCADE);
         var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
         background.anchor.setTo(0.5);
@@ -71,16 +72,15 @@ play.prototype = {
         this.createNewTile(true);
         this.scoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 92, '0', { fontSize: '140px', fill: '#9a97a6'});
         this.scoreLabel.anchor.setTo(0.5);
-        this.disableUserIO();
         this.restoreRoomState();
     },
 
     restoreRoomState: function() {
         var isNewGame = gameInfo.get(GAME_CONST.IS_NEW_GAME)
         if(isNewGame == null || isNewGame == undefined || isNewGame == true) {
-            this.enableUserIO()
             return
         }
+        this.disableUserIO()
 
         kapowRoomStore.get(GAME_CONST.ROOM_STORE.MOVES_COUNT, function(movesCount) {
             if(!movesCount) {
@@ -322,7 +322,6 @@ play.prototype = {
             var moveTween = gameInfo.get("game").add.tween(sprite).to({x: this.newTilePositionX, y: this.newTilePositionY}, 200, Phaser.Easing.Linear.None);
             moveTween.start()
         }
-
     },
 
     updateScore: function(shouldIncrement) {
