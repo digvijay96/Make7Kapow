@@ -50,6 +50,8 @@ play.prototype = {
         this.mergeFinalY = null;
         this.mergeDestinationIndex = null;
         this.mergeResultantNumber = null
+
+        this.numberSevenIndex = null
     },
 
     create: function() {
@@ -208,6 +210,7 @@ play.prototype = {
             if (this.mergeResultantNumber < this.numberSeven) {
                 this.mergeCellsIfRequired(this.mergeDestinationIndex)
             } else {
+                this.numberSevenIndex = this.mergeDestinationIndex
                 this.declareGameEnd(true)
             }
         }
