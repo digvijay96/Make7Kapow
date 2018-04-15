@@ -23,17 +23,17 @@ menu.prototype = {
 
         easyButton.inputEnabled = true;
         easyButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('EASY');
+            this.setDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.EASY);
         }, this);
 
         mediumButton.inputEnabled = true;
         mediumButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('MEDIUM');
+            this.setDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.MEDIUM);
         }, this);
 
         hardButton.inputEnabled = true;
         hardButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('HARD');
+            this.setDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.HARD);
         }, this);
 
         leaderboardButton.inputEnabled = true;
@@ -52,7 +52,7 @@ menu.prototype = {
     },
 
     setDifficultyLevel: function(difficulty) {
-    	gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficulty)
+    	gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL_KEY, difficulty)
         kapow.startSoloGame(function (roomDetail) {
             gameInfo.set('room', roomDetail);
             gameInfo.set(GAME_CONST.IS_NEW_GAME, true)

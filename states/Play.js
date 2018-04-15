@@ -43,7 +43,7 @@ play.prototype = {
         this.bottomHexCell = null;
         this.maxNumberForNewTile = 3;
         this.spriteKeyForNULLValue = '0';
-        this.defaultDifficultyLevel = 'EASY';
+        this.defaultDifficultyLevel = GAME_CONST.DIFFICULTY_LEVEL.EASY;
         
         this.tweensArray = [];
         this.mergeFinalX = null;
@@ -106,7 +106,7 @@ play.prototype = {
                 gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, this.defaultDifficultyLevel);
                 kapowRoomStore.set(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
             } else {
-                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficultyLevel)
+                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL_KEY, difficultyLevel)
             }
             console.log('restored' + GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL + ': ' + gameInfo.get('difficultyLevel'))
 
@@ -352,11 +352,11 @@ play.prototype = {
     },
 
     updateMaxNumberReached: function(currentNumber) {
-        if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'EASY') {
+        if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.EASY) {
             if (currentNumber >= 4) {
                 this.maxNumberForNewTile = 4;
             }
-        } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'MEDIUM') {
+        } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.MEDIUM) {
             if (currentNumber >= 6) {
                 this.maxNumberForNewTile = 4;;
             }

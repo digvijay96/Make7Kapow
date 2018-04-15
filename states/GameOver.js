@@ -122,20 +122,24 @@ gameOver.prototype = {
         return false;
     },
 
+    gameStoreHighScoreKey: function() {
+        return GAME_CONST.GAME_STORE_HIGH_SCORE_PREFIX + gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY)
+    },
+
     fetchHighscore: function () {
-        kapowGameStore.get("highScore", function(highScore){
+        kapowGameStore.get(this.gameStoreHighScoreKey(), function(highScore){
             console.log("In success of fetchHighscore",highScore);
             if (this.didUserWin() == true ) {
                 var actualHighScore = gameInfo.get("score");
                 if(highScore == null || highScore == undefined) {
                     console.log('High not found in gameStore for user win: null')
-                    kapowGameStore.set("highScore", gameInfo.get("score"));
+                    kapowGameStore.set(this.gameStoreHighScoreKey(), gameInfo.get("score"));
 
                 } else {
                     console.log('High score found in gameStore for user win: ', highScore)
                     if (parseInt(gameInfo.get("score")) < parseInt(highScore)) {
                         console.log('Updating highScore in gameStore to: ', gameInfo.get("score"))
-                        kapowGameStore.set("highScore", gameInfo.get("score"));
+                        kapowGameStore.set(this.gameStoreHighScoreKey(), gameInfo.get("score"));
 
                     } else {
                         console.log("using gameStore highScore for UI:",highScore)
