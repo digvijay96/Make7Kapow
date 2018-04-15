@@ -374,10 +374,10 @@ play.prototype = {
 
     updateMaxNumberReached: function(currentNumber) {
         if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.EASY) {
-            if (currentNumber >= 4) {
-                this.maxNumberForNewTile = 4;
-            } else if (currentNumber >= 5) {
+            if (currentNumber >= 5) {
                 this.maxNumberForNewTile = 5;
+            } else if (currentNumber >= 4) {
+                this.maxNumberForNewTile = 4;
             }
         } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.MEDIUM) {
             if (currentNumber >= 6) {
