@@ -43,6 +43,7 @@ window.game = {
     }*/
     onBackButtonPressed: function () {
         kapowClientController.handleBackButton();
+        return true
     },
     onPause: function () {
         console.log('On Pause Triggered.');
