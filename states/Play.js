@@ -63,7 +63,6 @@ play.prototype = {
         backButton.events.onInputUp.add(function() {
             kapowClientController.handleBackButton();
         }, this);
-
         var board = gameInfo.get("game").add.image(this.world.centerX, 875, 'board');
         board.anchor.setTo(0.5);
         this.createHexCells();
@@ -174,6 +173,8 @@ play.prototype = {
 
     declareGameEnd: function(didMakeSeven) {
         if (didMakeSeven) {
+            this.game.state.states.Loading.winning.play();
+            this.game.state.states.Loading.winning.volume = 5;
             gameInfo.set('won', true);
             console.log('YOU WON')
         } else {
@@ -329,6 +330,8 @@ play.prototype = {
         if(xPosition != this.newTilePositionX && yPosition != this.newTilePositionY) {
             sprite.position.setTo(xPosition, yPosition);
             sprite.input.draggable = false;
+            this.game.state.states.Loading.tileDrop.play();
+            this.game.state.states.Loading.tileDrop.volume = 5;
             this.createNewTile();
             this.disableUserIO()
             this.updateScore()
