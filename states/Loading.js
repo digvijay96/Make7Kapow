@@ -15,6 +15,8 @@ loading.prototype = {
         this.load.image('hard', 'assets/images/hard.png');
         this.load.image('leaderboard', 'assets/images/leaderboard.png');
         this.load.image('back', 'assets/images/back.png');
+        this.load.audio('tileDrop', 'assets/audio/TileDrop.mp3');
+        this.load.audio('winning', 'assets/audio/Winning.mp3');
     },
 
     create: function() {
@@ -23,12 +25,19 @@ loading.prototype = {
 
     onLoadComplete: function() {
         console.log("Changing state to menu");
+        this.tileDrop = this.game.add.audio('tileDrop');
+        this.winning = this.game.add.audio('winning');
+        this.game.sound.setDecodedCallback([this.tileDrop,this.winning], this._start, this);
+    },
+
+    _start: function() {
+        this.ready = true;
         var isNewGame = gameInfo.get(GAME_CONST.IS_NEW_GAME)
-        if (isNewGame != null && isNewGame != undefined && isNewGame == false ) {
-            this.game.state.start(GAME_CONST.STATES.PLAY);
-        } else {
-            this.game.state.start(GAME_CONST.STATES.MENU);
-        }
+            if (isNewGame != null && isNewGame != undefined && isNewGame == false ) {
+                this.game.state.start(GAME_CONST.STATES.PLAY);
+            } else {
+                this.game.state.start(GAME_CONST.STATES.MENU);
+            }
     },
 
     createBackground: function() {
