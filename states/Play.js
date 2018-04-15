@@ -167,9 +167,10 @@ play.prototype = {
                 GameManager.startState(GAME_CONST.STATES.GAMEOVER);
             }, GAME_CONST.END_GAME_PLAY_DELAY);
         } else {
+            setTimeout(function() {
             console.log("switching to GameOver state after loss");
             GameManager.startState(GAME_CONST.STATES.GAMEOVER);
-        }
+        }, GAME_CONST.END_GAME_PLAY_DELAY);
     },
 
     declareGameEnd: function(didMakeSeven) {

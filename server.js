@@ -1,8 +1,5 @@
 var mysql = require('mysql');
 var game = {
-    onMessageDelivered: function (data) {
-        console.log("SERVER onMessageDelivered - " + JSON.stringify(data));
-    },
     postScore: function(obj) {
         var score = obj.score;
         var playerId = kapow.getPlayerId();
