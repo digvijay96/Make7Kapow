@@ -50,7 +50,6 @@ play.prototype = {
         this.mergeFinalY = null;
         this.mergeDestinationIndex = null;
         this.mergeResultantNumber = null
-
     },
 
     create: function() {
@@ -156,6 +155,24 @@ play.prototype = {
     update: function() {
     },
 
+    endGamePlay: function(didMakeSeven) {
+        if(didMakeSeven == true) {
+            for (var index = 0; index < this.cellsArray.length; index++) {
+                var cell = this.cellsArray[index];
+                if (index != this.numberSevenIndex && cell.sprite != null) {
+                    cell.sprite.alpha = 0.4
+                }
+            }
+            setTimeout(function() {
+                console.log("switching to GameOver state after victory");
+                GameManager.startState(GAME_CONST.STATES.GAMEOVER);
+            }, GAME_CONST.END_GAME_PLAY_DELAY);
+        } else {
+            console.log("switching to GameOver state after loss");
+            GameManager.startState(GAME_CONST.STATES.GAMEOVER);
+        }
+    },
+
     declareGameEnd: function(didMakeSeven) {
         if (didMakeSeven) {
             gameInfo.set('won', true);
@@ -165,7 +182,7 @@ play.prototype = {
             console.log('YOU LOST')
         }
         gameInfo.set('score', this.numberOfMoves);
-        gameInfo.get('game').state.start('GameOver');
+        this.endGamePlay(didMakeSeven)
     },
 
     endMergeAnimation: function() {

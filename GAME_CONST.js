@@ -30,5 +30,6 @@ const GAME_CONST = {
     },
     DIFFICULTY_LEVEL_KEY: "difficulty_level",
     GAME_STORE_HIGH_SCORE_PREFIX: "high_score_",
-    IS_NEW_GAME: "is_new_game"
+    IS_NEW_GAME: "is_new_game",
+    END_GAME_PLAY_DELAY: 1000
 };
