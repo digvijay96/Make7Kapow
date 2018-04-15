@@ -17,7 +17,8 @@ play.prototype = {
         this.load.image('4', 'assets/images/4.png');
         this.load.image('5', 'assets/images/5.png');
         this.load.image('6', 'assets/images/6.png');
-        this.load.image('7', 'assets/7.png');
+        this.load.image('7', 'assets/images/7.png');
+        this.load.image('highlighter', 'assets/images/highlighter.png');
 
         this.cellsArray = [];
 
@@ -289,7 +290,7 @@ play.prototype = {
         var matchingIndex = this.checkMatchingTile(pointer);
         if(matchingIndex !== -1 && this.cellsArray[matchingIndex].spriteObject == null) {
             this.removeHighlighter();
-            this.highlighter = gameInfo.get("game").add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], '1');
+            this.highlighter = gameInfo.get("game").add.image(this.cellsArray[matchingIndex].frame[0], this.cellsArray[matchingIndex].frame[1], 'highlighter');
             this.highlighter.anchor.setTo(0.5, 0.5);
         } else {
             this.removeHighlighter();
