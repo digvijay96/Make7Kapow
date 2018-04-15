@@ -15,6 +15,8 @@ loading.prototype = {
         this.load.image('hard', 'assets/images/hard.png');
         this.load.image('leaderboard', 'assets/images/leaderboard.png');
         this.load.image('back', 'assets/images/back.png');
+        this.load.image('help', 'assets/images/help.png');
+        this.load.image('instructions', 'assets/images/instructions.png')
         this.load.audio('tileDrop', 'assets/audio/TileDrop.mp3');
         this.load.audio('winning', 'assets/audio/Winning.mp3');
     },

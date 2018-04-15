@@ -9,7 +9,8 @@ const GAME_CONST = {
         LOADING: "Loading",
         MENU: "Menu",
         PLAY: "Play",
-        GAMEOVER: "GameOver"
+        GAMEOVER: "GameOver",
+        HELP: "Help"
     },
     MUSIC: {
         VOLUME: {
