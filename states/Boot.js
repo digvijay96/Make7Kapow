@@ -7,8 +7,6 @@ boot.prototype = {
     preload: function() {
         gameInfo.set("screenState",GAME_CONST.STATES.BOOT);
         this.load.crossOrigin = 'anonymous';
-        // change below wala asset
-        this.load.image('menu_background', 'assets/images/background.png');
         this.load.image('background', 'assets/images/background.png');
         this.load.image("progressBackground", "assets/images/bar.png");
         this.load.image("progressBar", "assets/images/loading-bar.png");

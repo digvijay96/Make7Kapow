@@ -46,6 +46,12 @@ loading.prototype = {
         console.log("BG");
         var background = this.add.image(this.game.world.centerX, this.game.world.centerY, 'background');
         background.anchor.setTo(0.5);
+
+        var scoreHeading = this.game.add.text(gameInfo.get("game").world.centerX, 624, 'AGGREGO', {
+            fontSize: '140px',
+            fill: '#db6d76'
+        });
+        scoreHeading.anchor.setTo(0.5);
     },
 
     createLoader: function() {

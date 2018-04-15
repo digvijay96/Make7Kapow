@@ -12,6 +12,13 @@ menu.prototype = {
         console.log("Menu state");
         var background = gameInfo.get("game").add.image(this.game.world.centerX, this.game.world.centerY, 'background');
         background.anchor.setTo(0.5);
+
+        var scoreHeading = this.game.add.text(gameInfo.get("game").world.centerX, 624, 'AGGREGO', {
+            fontSize: '140px',
+            fill: '#db6d76'
+        });
+        scoreHeading.anchor.setTo(0.5);
+
         var easyButton = gameInfo.get("game").add.image(this.game.world.centerX, 1004, 'easy');
         easyButton.anchor.setTo(0.5);
         var mediumButton = gameInfo.get("game").add.image(this.game.world.centerX, 1184, 'medium');
