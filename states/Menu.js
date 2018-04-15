@@ -23,17 +23,17 @@ menu.prototype = {
 
         easyButton.inputEnabled = true;
         easyButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('EASY');
+            this.startGameWithDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.EASY);
         }, this);
 
         mediumButton.inputEnabled = true;
         mediumButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('MEDIUM');
+            this.startGameWithDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.MEDIUM);
         }, this);
 
         hardButton.inputEnabled = true;
         hardButton.events.onInputUp.add(function() {
-            this.setDifficultyLevel('HARD');
+            this.startGameWithDifficultyLevel(GAME_CONST.DIFFICULTY_LEVEL.HARD);
         }, this);
 
         leaderboardButton.inputEnabled = true;
@@ -51,15 +51,7 @@ menu.prototype = {
 
     },
 
-    setDifficultyLevel: function(difficulty) {
-    	gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficulty)
-        kapow.startSoloGame(function (roomDetail) {
-            gameInfo.set('room', roomDetail);
-            gameInfo.set(GAME_CONST.IS_NEW_GAME, true)
-            gameInfo.get("game").state.start(GAME_CONST.STATES.PLAY);
-            console.log('room received in onLOAD: ', roomDetail)
-        }, function (error) {
-            console.log("startSoloGame Failed : ", error);
-        });
+    startGameWithDifficultyLevel: function(difficultyLevel) {
+    	GameManager.startGameWithDifficulty(difficultyLevel);
     }
 };

@@ -11,10 +11,15 @@ gameOver.prototype = {
     },
 
     create: function() {
+        this.setupUIElementsAndHandlers()
         this.endSoloGame();
-        this.postScoreIfWon();
+        this.postScores();
+        this.updateResultText();
+        this.fetchHighscore();
+    },
 
-        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
+    setupUIElementsAndHandlers: function() {
+         var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
         background.anchor.setTo(0.5);
         this.resultLabel = this.game.add.text(gameInfo.get("game").world.centerX, 394, '', {
             fontSize: '140px',
@@ -38,7 +43,7 @@ gameOver.prototype = {
             fill: '#d95a65'
         });
         this.highscoreHeading.anchor.setTo(0.5);
-        this.highscoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 1140, '', {
+        this.highscoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 1140, '-', {
             fontSize: '120px',
             fill: '#9a97a6'
         });
@@ -56,12 +61,8 @@ gameOver.prototype = {
         resetButton.anchor.setTo(0.5);
         resetButton.inputEnabled = true;
         resetButton.events.onInputUp.add(function() {
-            gameInfo.get("game").state.start(GAME_CONST.STATES.MENU);
+            this.resetGame();
         }, this);
-
-        this.fetchHighscore();
-
-        this.updateResultText();
 
         var backButton = this.add.image(94, 91, 'back');
         backButton.anchor.setTo(0.5);
@@ -69,39 +70,29 @@ gameOver.prototype = {
         backButton.events.onInputUp.add(function() {
             kapowClientController.handleBackButton();
         }, this);
-
     },
 
-    fetchHighscore: function () {
-        kapowGameStore.get("highScore", function(highScore){
-            console.log("In success of fetchHighscore",highScore);
-            this.updateHighscore(highScore);
-        }.bind(this));
-    },
-
-    updateHighscore: function(highscore) {
-        if(highscore != null && highscore != undefined) {
-            console.log("In updateHighScore ",highscore);
-            this.highscoreLabel.text = highscore;
-        } else {
-            console.log("In else of updateHighscore")
-            if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
-                this.highscoreLabel.text = gameInfo.get("score");
-            } else {
-                this.highscoreLabel.text = "-";
-            }
-        }
+    resetGame: function() {
+        GameManager.restartGameWithSameDifficulty();
     },
 
     updateResultText: function() {
-
-        if(gameInfo.won == true) {
+        if(gameInfo.get('won') == true) {
             this.resultLabel.text = "YOU WIN";
             this.scoreLabel.text = gameInfo.get('score');
 
         } else {
             this.resultLabel.text = "YOU LOST";
             this.scoreLabel.text = "-";
+        }
+    },
+
+    updateHighscore: function(highscore) {
+        if(highscore != null && highscore != undefined && highscore != NaN) {
+            console.log("In updateHighScore ",highscore);
+            this.highscoreLabel.text = highscore;
+        } else {
+            this.highscoreLabel.text = "-";
         }
     },
 
@@ -114,29 +105,62 @@ gameOver.prototype = {
         // nullify room and empty gameInfo
     },
 
-    postScoreIfWon: function() {
-           if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
-                this.checkIfHighScoreAndSave();
-                kapow.invokeRPC('postScore', {"score": gameInfo.get("score")}, function() {
-                    console.log("Success Posting Score");
-            }, function(error) {
-                console.log("Failure Posting score", error);
-            });
-                gameInfo.get("game").add.image(100, 100, 'won');
-            } else {
-                gameInfo.get("game").add.image(100, 100, 'lost');
-            }
+    postScores: function() {
+       if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
+            kapow.invokeRPC('postScore', {"score": gameInfo.get("score")}, function() {
+                console.log("Success Posting Score");
+        }, function(error) {
+            console.log("Failure Posting score", error);
+        });
+            gameInfo.get("game").add.image(100, 100, 'won');
+        } else {
+            gameInfo.get("game").add.image(100, 100, 'lost');
+        }
     },
 
-    checkIfHighScoreAndSave: function(){
-        kapowGameStore.get("highScore", function(highScore){
-            if (!highScore) {
-                  kapowGameStore.set("highScore", gameInfo.get("score"));
-            console.log("HighScore initialized",kapowGameStore.get("highScore"));
-            } else if(highScore < gameInfo.get("score")) {
-                kapowGameStore.set("highScore", gameInfo.get("score"));
-                console.log("HighScore updated",kapowGameStore.get("highScore"));
+    didUserWin: function() {
+        var didUserWin = gameInfo.get('won');
+        if (didUserWin != null && didUserWin != undefined) {
+            return didUserWin;
+        }
+        return false;
+    },
+
+    gameStoreHighScoreKey: function() {
+        return GAME_CONST.GAME_STORE_HIGH_SCORE_PREFIX + gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY)
+    },
+
+    fetchHighscore: function () {
+        kapowGameStore.get(this.gameStoreHighScoreKey(), function(highScore){
+            console.log("In success of fetchHighscore",highScore);
+            if (this.didUserWin() == true ) {
+                var actualHighScore = gameInfo.get("score");
+                if(highScore == null || highScore == undefined) {
+                    console.log('High not found in gameStore for user win: null')
+                    kapowGameStore.set(this.gameStoreHighScoreKey(), gameInfo.get("score"));
+
+                } else {
+                    console.log('High score found in gameStore for user win: ', highScore)
+                    if (parseInt(gameInfo.get("score")) < parseInt(highScore)) {
+                        console.log('Updating highScore in gameStore to: ', gameInfo.get("score"))
+                        kapowGameStore.set(this.gameStoreHighScoreKey(), gameInfo.get("score"));
+
+                    } else {
+                        console.log("using gameStore highScore for UI:",highScore)
+                        actualHighScore = highScore;
+                    }
+                }
+                this.updateHighscore(actualHighScore);
+            } else {
+                this.updateHighscore(highScore);
             }
-        });
-    }
+        }.bind(this), function(error) {
+            console.log("Failed to fetch highScore from gameStore with error: ", error)
+            if (this.didUserWin() == true) {
+                this.updateHighscore(gameInfo.get('score'));
+            } else {
+                this.updateHighscore();
+            }
+        }.bind(this));
+    },
 };

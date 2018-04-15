@@ -43,17 +43,17 @@ play.prototype = {
         this.bottomHexCell = null;
         this.maxNumberForNewTile = 3;
         this.spriteKeyForNULLValue = '0';
-        this.defaultDifficultyLevel = 'EASY';
+        this.defaultDifficultyLevel = GAME_CONST.DIFFICULTY_LEVEL.EASY;
         
         this.tweensArray = [];
         this.mergeFinalX = null;
         this.mergeFinalY = null;
         this.mergeDestinationIndex = null;
         this.mergeResultantNumber = null
-
     },
 
     create: function() {
+
         gameInfo.get("game").physics.startSystem(Phaser.Physics.ARCADE);
         var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
         background.anchor.setTo(0.5);
@@ -70,16 +70,15 @@ play.prototype = {
         this.createNewTile(true);
         this.scoreLabel = this.game.add.text(gameInfo.get("game").world.centerX, 92, '0', { fontSize: '140px', fill: '#9a97a6'});
         this.scoreLabel.anchor.setTo(0.5);
-        this.disableUserIO();
         this.restoreRoomState();
     },
 
     restoreRoomState: function() {
         var isNewGame = gameInfo.get(GAME_CONST.IS_NEW_GAME)
         if(isNewGame == null || isNewGame == undefined || isNewGame == true) {
-            this.enableUserIO()
             return
         }
+        this.disableUserIO()
 
         kapowRoomStore.get(GAME_CONST.ROOM_STORE.MOVES_COUNT, function(movesCount) {
             if(!movesCount) {
@@ -105,7 +104,7 @@ play.prototype = {
                 gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, this.defaultDifficultyLevel);
                 kapowRoomStore.set(GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL, this.defaultDifficultyLevel)
             } else {
-                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficultyLevel)
+                gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL_KEY, difficultyLevel)
             }
             console.log('restored' + GAME_CONST.ROOM_STORE.DIFFICULTY_LEVEL + ': ' + gameInfo.get('difficultyLevel'))
 
@@ -155,6 +154,24 @@ play.prototype = {
     update: function() {
     },
 
+    endGamePlay: function(didMakeSeven) {
+        if(didMakeSeven == true) {
+            for (var index = 0; index < this.cellsArray.length; index++) {
+                var cell = this.cellsArray[index];
+                if (index != this.numberSevenIndex && cell.sprite != null) {
+                    cell.sprite.alpha = 0.4
+                }
+            }
+            setTimeout(function() {
+                console.log("switching to GameOver state after victory");
+                GameManager.startState(GAME_CONST.STATES.GAMEOVER);
+            }, GAME_CONST.END_GAME_PLAY_DELAY);
+        } else {
+            console.log("switching to GameOver state after loss");
+            GameManager.startState(GAME_CONST.STATES.GAMEOVER);
+        }
+    },
+
     declareGameEnd: function(didMakeSeven) {
         if (didMakeSeven) {
             this.game.state.states.Loading.winning.play();
@@ -166,7 +183,7 @@ play.prototype = {
             console.log('YOU LOST')
         }
         gameInfo.set('score', this.numberOfMoves);
-        gameInfo.get('game').state.start('GameOver');
+        this.endGamePlay(didMakeSeven)
     },
 
     endMergeAnimation: function() {
@@ -325,7 +342,6 @@ play.prototype = {
             var moveTween = gameInfo.get("game").add.tween(sprite).to({x: this.newTilePositionX, y: this.newTilePositionY}, 200, Phaser.Easing.Linear.None);
             moveTween.start()
         }
-
     },
 
     updateScore: function(shouldIncrement) {
@@ -356,11 +372,11 @@ play.prototype = {
     },
 
     updateMaxNumberReached: function(currentNumber) {
-        if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'EASY') {
+        if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.EASY) {
             if (currentNumber >= 4) {
                 this.maxNumberForNewTile = 4;
             }
-        } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL) == 'MEDIUM') {
+        } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.MEDIUM) {
             if (currentNumber >= 6) {
                 this.maxNumberForNewTile = 4;;
             }
