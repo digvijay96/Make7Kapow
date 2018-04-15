@@ -25,7 +25,7 @@ play.prototype = {
         this.highlighter = null;
         this.scoreLabel = null;
 
-        this.tileArray = ['1', '2', '3', '4'];
+        this.tileArray = ['1', '2', '3', '4', '5'];
 
         this.newTilePositionX = this.world.centerX;
         this.newTilePositionY = 1632;
@@ -376,6 +376,8 @@ play.prototype = {
         if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.EASY) {
             if (currentNumber >= 4) {
                 this.maxNumberForNewTile = 4;
+            } else if (currentNumber >= 5) {
+                this.maxNumberForNewTile = 5;
             }
         } else if (gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) == GAME_CONST.DIFFICULTY_LEVEL.MEDIUM) {
             if (currentNumber >= 6) {
