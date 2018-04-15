@@ -3,16 +3,13 @@ var GameManager = {
     startGame : function(){
         this.startState(GAME_CONST.STATES.BOOT);
     },
-    restartExistingGame: function() {
-        this.startState(GAME_CONST.STATES.PLAY);
-    },
     startState: function(state) {
         gameInfo.set("screenState", state);
         gameInfo.get("game").state.start(state);
     },
     resetGameState: function() {
         this._resetRoom();
-        GameManager.startState(GAME_CONST.STATES.LOADING);
+        GameManager.startState(GAME_CONST.STATES.MENU);
     },
     _resetRoom: function() {
         kapow.unloadRoom(function () {

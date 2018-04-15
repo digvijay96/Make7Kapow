@@ -75,6 +75,12 @@ play.prototype = {
     },
 
     restoreRoomState: function() {
+        var isNewGame = gameInfo.get(GAME_CONST.IS_NEW_GAME)
+        if(isNewGame == null || isNewGame == undefined || isNewGame == true) {
+            this.enableUserIO()
+            return
+        }
+
         kapowRoomStore.get(GAME_CONST.ROOM_STORE.MOVES_COUNT, function(movesCount) {
             if(!movesCount) {
                 this.numberOfMoves = 0

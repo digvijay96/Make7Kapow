@@ -14,11 +14,12 @@ KapowClientController.prototype.handleOnLoad = function(room) {
         console.log("Client getUserInfoSuccess - User: " + JSON.stringify(user));
         gameInfo.set("playerData", user.player);
         console.log("Game about to be started.");
-        if (room == null) {
-            GameManager.startGame();
-        } else {
-            GameManager.restartExistingGame()
+        if(room != null && room != undefined) {
+            console.log("Starting existing game with room: ", JSON.stringify(gameInfo.get('room')))
+            gameInfo.set(GAME_CONST.IS_NEW_GAME, false);
         }
+        GameManager.startGame();
+
     }, function (error) {
         console.log("Client getUserInfo failure", error);
     });

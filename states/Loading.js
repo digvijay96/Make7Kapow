@@ -23,7 +23,12 @@ loading.prototype = {
 
     onLoadComplete: function() {
         console.log("Changing state to menu");
-        this.game.state.start(GAME_CONST.STATES.MENU);
+        var isNewGame = gameInfo.get(GAME_CONST.IS_NEW_GAME)
+        if (isNewGame != null && isNewGame != undefined && isNewGame == false ) {
+            this.game.state.start(GAME_CONST.STATES.PLAY);
+        } else {
+            this.game.state.start(GAME_CONST.STATES.MENU);
+        }
     },
 
     createBackground: function() {
@@ -37,6 +42,5 @@ loading.prototype = {
         this.progressBackground = this.add.sprite(this.game.world.centerX-332, this.game.world.centerY + 346, "progressBackground");
         this.progressBar = this.add.sprite(this.game.world.centerX-332, this.game.world.centerY + 346, "progressBar");
         this.load.setPreloadSprite(this.progressBar);
-
     }
 };

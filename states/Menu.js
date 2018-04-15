@@ -55,6 +55,7 @@ menu.prototype = {
     	gameInfo.set(GAME_CONST.DIFFICULTY_LEVEL, difficulty)
         kapow.startSoloGame(function (roomDetail) {
             gameInfo.set('room', roomDetail);
+            gameInfo.set(GAME_CONST.IS_NEW_GAME, true)
             gameInfo.get("game").state.start(GAME_CONST.STATES.PLAY);
             console.log('room received in onLOAD: ', roomDetail)
         }, function (error) {

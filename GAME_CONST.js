@@ -23,5 +23,6 @@ const GAME_CONST = {
         DIFFICULTY_LEVEL: "difficulty_level",
         HEX_CELL_SPRITE_KEYS: "hex_cell_sprite_keys"
     },
-    DIFFICULTY_LEVEL: "difficulty_level"
+    DIFFICULTY_LEVEL: "difficulty_level",
+    IS_NEW_GAME: "is_new_game"
 };
