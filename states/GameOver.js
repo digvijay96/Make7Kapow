@@ -74,14 +74,17 @@ gameOver.prototype = {
 
     fetchHighscore: function () {
         kapowGameStore.get("highScore", function(highScore){
+            console.log("In success of fetchHighscore",highScore);
             this.updateHighscore(highScore);
-        });
+        }.bind(this));
     },
 
     updateHighscore: function(highscore) {
         if(highscore != null && highscore != undefined) {
+            console.log("In updateHighScore ",highscore);
             this.highscoreLabel.text = highscore;
         } else {
+            console.log("In else of updateHighscore")
             if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
                 this.highscoreLabel.text = gameInfo.get("score");
             } else {
