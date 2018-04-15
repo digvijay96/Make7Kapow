@@ -19,7 +19,7 @@ gameOver.prototype = {
     },
 
     setupUIElementsAndHandlers: function() {
-         var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
+        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'background');
         background.anchor.setTo(0.5);
         this.resultLabel = this.game.add.text(gameInfo.get("game").world.centerX, 394, '', {
             fontSize: '140px',

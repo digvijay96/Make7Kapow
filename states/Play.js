@@ -53,9 +53,8 @@ play.prototype = {
     },
 
     create: function() {
-
         gameInfo.get("game").physics.startSystem(Phaser.Physics.ARCADE);
-        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'bgColor');
+        var background = this.add.image(gameInfo.get("game").world.centerX, gameInfo.get("game").world.centerY, 'background');
         background.anchor.setTo(0.5);
 
         var backButton = this.add.image(94, 91, 'back');

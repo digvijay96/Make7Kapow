@@ -40,6 +40,12 @@ KapowClientController.prototype.handleBackButton = function() {
             GameManager.resetGameState();
             break;
         }
+
+        case GAME_CONST.STATES.HELP: {
+            console.log("Resetting game state");
+            GameManager.resetGameState();
+            break;
+        }
         default : {
             console.log("Calling kapow.close")
             kapow.close();

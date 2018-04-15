@@ -49,6 +49,13 @@ menu.prototype = {
             kapowClientController.handleBackButton();
         }, this);
 
+        var helpButton = this.add.image(996, 91, 'help');
+        helpButton.anchor.setTo(0.5);
+        helpButton.inputEnabled = true;
+        helpButton.events.onInputUp.add(function() {
+            GameManager.startState(GAME_CONST.STATES.HELP)
+        }, this);
+
     },
 
     startGameWithDifficultyLevel: function(difficultyLevel) {
