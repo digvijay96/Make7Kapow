@@ -53,7 +53,7 @@ gameOver.prototype = {
         leaderboardButton.anchor.setTo(0.5);
         leaderboardButton.inputEnabled = true;
         leaderboardButton.events.onInputUp.add(function() {
-            var parameters = {'metric':'score','interval':'daily'};
+            var parameters = {'metric': gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY),'interval':'daily'};
             kapow.boards.displayScoreboard(parameters);
         }, this);
 
@@ -107,12 +107,13 @@ gameOver.prototype = {
 
     postScores: function() {
        if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
-        var obj = {gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) : gameInfo.get("score")};
+            var obj = {};
+            obj[gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY)] = gameInfo.get("score");
             kapow.invokeRPC('postScore', obj, function() {
-                console.log("Success Posting Score",console.log(obj);
-        }, function(error) {
-            console.log("Failure Posting score", error);
-        });
+                console.log("Success Posting Score",console.log(obj));
+            }, function(error) {
+                console.log("Failure Posting score", error);
+            });
             gameInfo.get("game").add.image(100, 100, 'won');
         } else {
             gameInfo.get("game").add.image(100, 100, 'lost');

@@ -45,7 +45,7 @@ menu.prototype = {
 
         leaderboardButton.inputEnabled = true;
         leaderboardButton.events.onInputUp.add(function() {
-            var parameters = {'metric':'score','interval':'daily'};
+            var parameters = {'metric':GAME_CONST.DIFFICULTY_LEVEL.EASY, 'interval':'daily'};
             kapow.boards.displayScoreboard(parameters);
         }, this);
 
