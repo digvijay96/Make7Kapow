@@ -1,13 +1,10 @@
 var mysql = require('mysql');
 var game = {
     postScore: function(obj) {
-        var score = obj.score;
         var playerId = kapow.getPlayerId();
         var score = {
             "playerId":playerId,
-            "scores": {
-                'score' : score
-            }
+            "scores": obj
         };
         console.log("archit",score);
         kapow.boards.postScores(score, function() {

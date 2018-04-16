@@ -107,8 +107,9 @@ gameOver.prototype = {
 
     postScores: function() {
        if(gameInfo.get('won') == true && gameInfo.get("score") != null) {
-            kapow.invokeRPC('postScore', {"score": gameInfo.get("score")}, function() {
-                console.log("Success Posting Score");
+        var obj = {gameInfo.get(GAME_CONST.DIFFICULTY_LEVEL_KEY) : gameInfo.get("score")};
+            kapow.invokeRPC('postScore', obj, function() {
+                console.log("Success Posting Score",console.log(obj);
         }, function(error) {
             console.log("Failure Posting score", error);
         });
